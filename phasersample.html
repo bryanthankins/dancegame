@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.2.2/phaser.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+       var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+
+function preload() {
+
+    game.load.image('stage', 'assets/pics/stage.jpg');
+    game.load.audio('song', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
+    game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+    game.load.spritesheet('button', 'assets/sprites/button_sprite_sheet.png', 193, 71);
+}
+
+var back;
+var mummy;
+var anim;
+var loopText;
+var buttonPressed = true;
+
+function create() {
+    //playMusic();
+
+    //Background
+    back = game.add.image(0, -100, 'stage');
+    //back.scale.set(2);
+    back.smoothed = false;
+
+    //Sprites
+    mummy = game.add.sprite(204, 230, 'mummy', 5);
+    mummy.scale.set(4);
+    mummy.smoothed = false;
+    anim = mummy.animations.add('walk');    
+
+    //Button
+    button = game.add.button(game.world.centerX / 2, 495, 'button', buttonOnClick, this, 2, 1, 0);
+
+    // Require them to press the button
+    game.time.events.loop(4000, startNewMove, this);
+
+    
+}
+
+function playMusic() {
+    // NOTE: Focus must be on screen to play
+    music = game.add.audio('song');
+    music.play();
+}
+
+function startNewMove() {
+    //TODO: Give them a random arrow
+    console.log("Start new move");
+    if(!buttonPressed)
+    {
+        console.log('fail!');
+        buttonPressed = true;
+    }
+    buttonPressed = false;
+
+}
+
+function buttonOnClick () {
+
+    //TODO: change this to play random animation
+    buttonPressed = true;
+    console.log('success!');
+    anim.play(10, false);
+}
+
+function update() {
+
+}
+    </script>
+
+</body>
+
+</html>
