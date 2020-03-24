@@ -12,7 +12,7 @@
 
 function preload() {
 
-    game.load.image('stage', 'assets/pics/stage.jpg');
+    game.load.image('stage', 'assets/pics/stage.png');
     game.load.audio('song', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
     game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
     game.load.image('arrow', 'assets/sprites/arrow.png');
@@ -23,22 +23,22 @@ var mummy;
 var dancer;
 var anim;
 var loopText;
-var sprite;
 var buttonPressed = true;
 var timer;
 var failCounter = 0;
+var arrows;
 
 function create() {
     // Play music
     // music = game.add.audio('song');
     // music.play();
 
-    //Background
-    back = game.add.image(0, -100, 'stage');
+    // Background
+    back = game.add.image(20, -50, 'stage');
     back.smoothed = false;
 
-    //dancer
-    dancer = game.add.sprite(185, 230, 'dancer', 5);
+    // Dancer
+    dancer = game.add.sprite(225, 325, 'dancer', 5);
     dancer.scale.set(3);
     dancer.smoothed = false;
     dancer.animations.add('dance1',game.math.numberArray(0,7));    
@@ -46,15 +46,22 @@ function create() {
     dancer.animations.add('dance3',game.math.numberArray(17,25));
     dancer.animations.add('dance4',game.math.numberArray(26,34));
 
-    // TODO: Add 4 sprites at diff sprite.angle = 90
-    sprite = game.add.sprite(400, 300, 'arrow');
-    sprite.anchor.setTo(0.5, 0.5);
-    sprite.visible = false;
-    sprite.inputEnabled = true;
-    sprite.events.onInputDown.add(arrowClick, this);
+    // Arrows
+    arrows = game.add.group();
+    //arrows.create(175, 300, 'arrow').angle = 180;
+    arrows.create(385, 300, 'arrow').angle = 0;
+    //arrows.create(100, 50, 'arrow').angle = -45;    
+    arrows.forEach(function(arrow){
+            arrow.anchor.setTo(0.5, 0.5);
+            arrow.visible = true;
+            arrow.smoothed = false;
+            arrow.inputEnabled = true;
+            arrow.events.onInputDown.add(arrowClick, this);
+        
+    }); 
 
-    // Require them to press the button
-    timer = game.time.events.loop(game.rnd.integerInRange(1000, 4000), startNewMove, this);    
+    // Game loop
+    timer = game.time.events.loop(game.rnd.integerInRange(600, 3500), startNewMove, this);    
 }
 
 function resetGame(level) {
@@ -63,11 +70,10 @@ function resetGame(level) {
 
 
 function startNewMove() {
-    //TODO: Show a random arrow
     console.log("Start new move");
 
-    //Show arrow
-    sprite.visible = true;
+    //Show arrow    
+    arrows.getRandom().visible = true;
 
     if(!buttonPressed)
     {
@@ -89,10 +95,10 @@ function startNewMove() {
 
 }
 
-function arrowClick () {
+function arrowClick (arrow) {
 
     //hide  arrow
-    sprite.visible = false;
+    arrow.visible = false;
     buttonPressed = true;
     console.log('success!');    
     dancer.animations.play('dance' + game.rnd.integerInRange(1, 4),10,true);
