@@ -13,7 +13,8 @@
 function preload() {
 
     game.load.image('stage', 'assets/pics/stage.png');
-    game.load.audio('song', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
+    game.load.image('note', 'assets/sprites/musicnote.png');
+    game.load.audio('song', ['assets/audio/space.mp3']);
     game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
     game.load.image('arrow', 'assets/sprites/arrow.png');
 }
@@ -27,11 +28,13 @@ var buttonPressed = true;
 var timer;
 var failCounter = 0;
 var arrows;
+var note;
+var arrowInterval = 2000;
 
 function create() {
     // Play music
-    // music = game.add.audio('song');
-    // music.play();
+    music = game.add.audio('song');
+    music.play();
 
     // Background
     back = game.add.image(20, -50, 'stage');
@@ -48,30 +51,36 @@ function create() {
 
     // Arrows
     arrows = game.add.group();
-    //arrows.create(175, 300, 'arrow').angle = 180;
-    arrows.create(385, 300, 'arrow').angle = 0;
-    //arrows.create(100, 50, 'arrow').angle = -45;    
+    arrows.create(225, 400, 'arrow').angle = 180;
+    arrows.create(425, 400, 'arrow').angle = 0;
+    arrows.create(320, 290, 'arrow').angle = -90;    
     arrows.forEach(function(arrow){
             arrow.anchor.setTo(0.5, 0.5);
-            arrow.visible = true;
+            arrow.visible = false;
             arrow.smoothed = false;
             arrow.inputEnabled = true;
             arrow.events.onInputDown.add(arrowClick, this);
         
     }); 
 
+    // Music note
+    note = game.add.sprite(10, 555, 'note');
+    note.inputEnabled = true;
+    note.events.onInputDown.add(noteClick, this);
+
     // Game loop
-    timer = game.time.events.loop(game.rnd.integerInRange(600, 3500), startNewMove, this);    
+    timer = game.time.events.loop(arrowInterval, startNewMove, this);    
 }
 
-function resetGame(level) {
-    //TODO: reset based on level
+function noteClick() {
+    music.pause();
 }
+
 
 
 function startNewMove() {
     console.log("Start new move");
-
+    
     //Show arrow    
     arrows.getRandom().visible = true;
 
