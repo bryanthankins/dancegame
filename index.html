@@ -8,7 +8,10 @@
 <body>
 
     <script>
-       var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+       
+    var WIDTH = window.screen.availWidth * window.devicePixelRatio;
+    var HEIGHT = window.screen.availHeight * window.devicePixelRatio;
+    var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
 
