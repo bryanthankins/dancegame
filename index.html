@@ -134,7 +134,7 @@ function create() {
 
 function startGame() {
     
-    //music.play();
+    music.play();
     dancer.animations.play('dance' + game.rnd.integerInRange(1, 4),10,true);
     back.inputEnabled = false;
     bmpText.visible = false;
@@ -178,7 +178,10 @@ function startNewMove() {
             failText.anchor.x = 0.5;
             dancer.animations.stop(null, true);
             dancer.frame = 7; //sad frame
-            currArrow.visible = false;
+            arrows.forEach(function(arrow){
+                arrow.visible = false;
+            }); 
+            
         }
 
         buttonPressed = true;
