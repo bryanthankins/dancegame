@@ -43,6 +43,7 @@ var currArrow;
 var bmpText;
 var bmpText2;
 var startText;
+var scaleRatio = window.devicePixelRatio / 3;
 
 function create() {
    // game.input.maxPointers = 1;
@@ -51,17 +52,14 @@ function create() {
     game.stage.backgroundColor = 0x000000;
     if (!game.device.desktop) {
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		    game.scale.setMinMax(game.width/2, game.height/2, game.width*2, game.height*2);
+		    //game.scale.setMinMax(game.width/2, game.height/2, game.width*2, game.height*2);
 			game.scale.pageAlignHorizontally = true; 
 			game.scale.pageAlignVertically = true;
             document.body.style.backgroundColor = '#000000';
 		}
-
     
     // Add music
      music = game.add.audio('song');  
-    
-
  
     // // Background
     back = game.add.image(game.world.centerX, game.world.centerY, 'stage');
