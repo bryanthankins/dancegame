@@ -94,9 +94,9 @@ function create() {
 
     // // Arrows
     arrows = game.add.group();
-    arrows.create(225, 400, 'arrow').angle = 180;
-    arrows.create(425, 400, 'arrow').angle = 0;
-    arrows.create(320, 290, 'arrow').angle = -90;    
+    arrows.create(this.world.centerX - 115, this.world.centerY + 150, 'arrow').angle = 180;
+    arrows.create(this.world.centerX + 115, this.world.centerY + 150, 'arrow').angle = 0;
+    arrows.create(this.world.centerX, this.world.centerY + 35, 'arrow').angle = -90;    
     arrows.forEach(function(arrow){
             arrow.anchor.setTo(0.5, 0.5);
             arrow.visible = false;
