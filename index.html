@@ -33,6 +33,7 @@
             game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
             game.load.image('arrow', 'assets/sprites/arrow.png');
             game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
+            game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
 
@@ -135,13 +136,14 @@
             dancer.frame = 0; //happy frame
 
             // // Arrows
-            //TODO: TAG SLIDE ARROWS
             arrows = game.add.group();
             arrows.create(this.world.centerX - 115, this.world.centerY + 150, 'arrow').angle = 180;
             arrows.create(this.world.centerX + 115, this.world.centerY + 150, 'arrow').angle = 0;
             arrows.create(this.world.centerX, this.world.centerY + 35, 'arrow').angle = -90;
             arrows.create(this.world.centerX - 205, this.world.centerY + 150, 'slidearrow').angle = 180;
-            arrows.create(this.world.centerX + 205, this.world.centerY + 150, 'slidearrow').angle = 0;    
+            arrows.create(this.world.centerX + 205, this.world.centerY + 150, 'slidearrow').angle = 0;  
+            arrows.create(this.world.centerX + 205, this.world.centerY - 110, 'diagonalarrow').angle = -45;   
+            arrows.create(this.world.centerX - 205, this.world.centerY - 110, 'diagonalarrow').angle = -125;   
             arrows.forEach(function (arrow) {
                 arrow.anchor.setTo(0.5, 0.5);
                 arrow.visible = false;
@@ -258,12 +260,12 @@
 
         function getPostivePhrase() {
             var positivePhrase = [
-                "AWESOME! +50",
-                "NICE! + 50",
-                "Oh Yeah! +50",
-                "Rock on! +50",
-                "Woah! Nice! + 50",
-                "Beast Mode! + 50"
+                "AWESOME!",
+                "NICE!",
+                "Oh Yeah!",
+                "Rock on!",
+                "Woah! Nice!",
+                "Beast Mode!"
             ];
 
             var randomNum = game.rnd.integerInRange(0, 5);
@@ -274,12 +276,12 @@
 
         function getNegativePhrase() {
             var positivePhrase = [
-                "BOO! -25",
-                "SAD! + 25",
-                "Umm.....! -25",
-                "Fail! -25",
-                "You suck! -25",
-                "Off beat! -25"
+                "BOO!",
+                "SAD!",
+                "Umm...!",
+                "FAIL!",
+                "You Suck!",
+                "Off Beat!"
             ];
 
             var randomNum = game.rnd.integerInRange(0, 5);
@@ -320,6 +322,13 @@
                 }
                 game.add.tween(dancer).to({ x: game.world.centerX + slideOffset }, 500).to({ x: game.world.centerX }, 500).start();
                 game.add.tween(dancer).to({ angle: rotateOffset }, 500).to({ angle: 2 }, 500).to({ angle: 0 }, 500).start();
+            }
+            else if(arrow.key == 'diagonalarrow'){
+                if(arrow.angle == -45){
+                    game.add.tween(dancer).to({ angle: 360 }, 500).start();
+                } else {
+                    game.add.tween(dancer).to({ angle: -360 }, 500).start();
+                }
             } else if (arrow.angle == -90) {
                 game.add.tween(dancer).to({ y: game.world.centerY + 105 }, 200).to({ y: game.world.centerY + 175 }, 200).start();
             }
@@ -332,11 +341,11 @@
                 startNewMove();
 
                 // Speed up & Add more arrows
-                if (moveCounter > 5 && moveCounter < 10) {
+                if (moveCounter > 10 && moveCounter < 15) {
                     arrowInterval = 1.0;
-                } else if (moveCounter > 10 && moveCounter < 15) {
-                    simultaneousArrows = 2;
                 } else if (moveCounter > 15 && moveCounter < 20) {
+                    simultaneousArrows = 2;
+                } else if (moveCounter > 20) {
                     arrowInterval = 0.7;
                     simultaneousArrows = 3;
                 }
