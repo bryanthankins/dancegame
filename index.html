@@ -79,7 +79,7 @@ function create() {
 		}
     
     // Add music
-     music = game.add.audio('song');  
+     music = game.add.audio('song',0.5);  
      startSound = game.add.audio('start');  
      successSound = game.add.audio('success');  
      missSound = game.add.audio('miss');  
@@ -216,6 +216,7 @@ function startNewMove() {
             dancer.animations.stop(null, true);
             dancer.frame = 7; //sad frame
             endSound.play();
+            music.pause();
             currArrow.visible = false;
             currSlideArrow.visible = false;
            
