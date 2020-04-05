@@ -21,8 +21,15 @@ function preload() {
     game.load.image('stage', 'assets/pics/stage.png');
     game.load.image('note', 'assets/sprites/musicnote.png');
     game.load.audio('song', ['assets/audio/space.mp3']);
+
+    game.load.audio('start', ['assets/audio/button_start.wav']);
+    game.load.audio('success', ['assets/audio/button_correct.wav']);
+    game.load.audio('miss', ['assets/audio/button_fail.wav']);
+    game.load.audio('end', ['assets/audio/dramatic.wav']);
+
     game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
     game.load.image('arrow', 'assets/sprites/arrow.png');
+    game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
     game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
 
@@ -34,6 +41,7 @@ var dancer;
 var anim;
 var loopText;
 var buttonPressed = true;
+var slideButtonPressed = true;
 var timer;
 var failCounter = 0;
 var arrows;
@@ -48,10 +56,17 @@ var levelText;
 var currScore = 0;
 var arrowShownTime;
 var timeToClickArrow;
-
-var currArrow2;
+var slideArrowShownTime;
+var timeToClickSlideArrow;
+var slideArrows;
+var currSlideArrow;
+var startSound;
+var successSound;
+var missSound;
+var endSound;
 
 function create() {
+    // Game set-up
     game.input.maxPointers = 3;
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
@@ -65,6 +80,10 @@ function create() {
     
     // Add music
      music = game.add.audio('song');  
+     startSound = game.add.audio('start');  
+     successSound = game.add.audio('success');  
+     missSound = game.add.audio('miss');  
+     endSound = game.add.audio('end');  
  
     // // Background
     back = game.add.image(game.world.centerX, game.world.centerY, 'stage');
@@ -123,6 +142,19 @@ function create() {
         
     }); 
 
+    // Slide arrows
+    slideArrows = game.add.group();
+    slideArrows.create(this.world.centerX - 205, this.world.centerY + 150, 'slidearrow').angle = 180;
+    slideArrows.create(this.world.centerX + 205, this.world.centerY + 150, 'slidearrow').angle = 0;    
+    slideArrows.forEach(function(arrow){
+            arrow.anchor.setTo(0.5, 0.5);
+            arrow.visible = false;
+            arrow.smoothed = false;
+            arrow.inputEnabled = true;
+            arrow.events.onInputDown.add(slideArrowClick, this);
+        
+    }); 
+
     // // Music note
     note = game.add.sprite(this.world.centerX - 265, this.world.centerY + 280, 'note');
     note.anchor.setTo(0.5);
@@ -142,7 +174,7 @@ function startGame() {
     startText.visible = false;
     scoreText.visible = true;
     levelText.visible = true;
-
+    startSound.play();
     
     // Game loop
     timer = game.time.events.loop(arrowInterval, startNewMove, this);    
@@ -162,15 +194,20 @@ function startNewMove() {
     currArrow = arrows.getRandom();
     currArrow.visible = true;
 
-    currArrow2 = arrows.getRandom();
-    currArrow2.visible = true;
+    if(currSlideArrow)   
+        currSlideArrow.visible = false;
+    currSlideArrow = slideArrows.getRandom();
+    currSlideArrow.visible = true;
 
+    
     arrowShownTime = game.time.time;
+    
 
     if(!buttonPressed)
     {
         failCounter +=1;
-        if(failCounter > 2) 
+        missSound.play();
+        if(failCounter > 2)     
         {
             game.time.events.remove(timer);
  
@@ -178,10 +215,10 @@ function startNewMove() {
             failText.anchor.x = 0.5;
             dancer.animations.stop(null, true);
             dancer.frame = 7; //sad frame
-            arrows.forEach(function(arrow){
-                arrow.visible = false;
-            }); 
-            
+            endSound.play();
+            currArrow.visible = false;
+            currSlideArrow.visible = false;
+           
         }
 
         buttonPressed = true;
@@ -196,15 +233,113 @@ function startNewMove() {
 
 }
 
-function arrowClick (arrow) {
+function slideArrowClick (slideArrow) {
 
     //hide  arrow
+    timeToClickSlideArrow = game.time.elapsedSecondsSince(slideArrowShownTime);    
+    if(timeToClickSlideArrow < 0.5)
+        console.log("GREAT!");
+    else if(timeToClickSlideArrow < 1)
+        console.log("OK");
+    else
+        console.log("Poor");
+    slideArrow.visible = false;
+    slideButtonPressed = true;
+    dancer.animations.play('dance' + game.rnd.integerInRange(1, 4),10,true);
+    var slideOffset = 0;
+    var rotateOffset = 0;
+    if(slideArrow.angle == 0) {
+        slideOffset = 200;
+        rotateOffset = 15
+    }
+    else {
+        slideOffset = -200;
+        rotateOffset = -15
+    }
+    game.add.tween(dancer).to({x: game.world.centerX + slideOffset}, 500).to({x: game.world.centerX}, 500).start();    
+    game.add.tween(dancer).to({angle: rotateOffset}, 500).to({angle: 2}, 500).to({angle: 0}, 500).start();
+    
+}
+
+
+function getPostivePhrase() {
+		var positivePhrase = [
+	    "AWESOME! +50",
+	    "NICE! + 50",
+	    "Oh Yeah! +50",
+	    "Rock on! +50",
+	    "Woah! Nice! + 50",
+	    "Beast Mode! + 50"
+		];
+
+		var randomNum = game.rnd.integerInRange(0,5);
+		return positivePhrase[randomNum];
+
+    }
+    
+    
+function getNegativePhrase() {
+		var positivePhrase = [
+	    "BOO! -25",
+	    "SAD! + 25",
+	    "Umm.....! -25",
+	    "Fail! -25",
+	    "You suck! -25",
+	    "Off beat! -25"
+		];
+
+		var randomNum = game.rnd.integerInRange(0,5);
+		return positivePhrase[randomNum];
+
+	}
+
+function arrowClick (arrow) {
+
+    
+    //hide  arrow
     timeToClickArrow = game.time.elapsedSecondsSince(arrowShownTime);    
-    console.log(timeToClickArrow);
+     console.log(timeToClickArrow);
+    if(timeToClickArrow < 0.5) {
+        console.log("GREAT");
+        
+        
+
+        var bonusText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command',  getPostivePhrase(), 24);
+        bonusText.anchor.setTo(0.5);
+        bonusText.smoothed = false;
+    
+        
+        game.add.tween(bonusText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
+        game.add.tween(bonusText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+            
+        successSound.play();
+        currScore += 50;
+
+    }
+    else if(timeToClickArrow < 1){
+        console.log("OK");
+        successSound.play();
+    }        
+    else {
+        var missText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command',  getNegativePhrase(), 24);
+        missText.anchor.setTo(0.5);
+        missText.smoothed = false;
+        
+        game.add.tween(missText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
+        game.add.tween(missText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+        game.add.tween(missText).to({angle: -50}, 500).to({angle: 50}, 1000).to({angle: -50}, 500).loop().start();
+            
+        missSound.play();
+        currScore -= 25;
+        console.log("Poor");
+    }
+      
     arrow.visible = false;
     buttonPressed = true;
-    console.log('success!');    
+    // console.log('success!');    
     dancer.animations.play('dance' + game.rnd.integerInRange(1, 4),10,true);
+    if(arrow.angle == -90)
+        game.add.tween(dancer).to({y: game.world.centerY + 105}, 200).to({y: game.world.centerY + 175}, 200).start();    
 }
 
 function update() {
