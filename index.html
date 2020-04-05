@@ -68,6 +68,7 @@
         var gameTimer;
         var gameRunning = false;
         var moveCounter = 0;
+        var simultaneousArrows = 1;
 
         function create() {
             // Game set-up
@@ -134,31 +135,23 @@
             dancer.frame = 0; //happy frame
 
             // // Arrows
+            //TODO: TAG SLIDE ARROWS
             arrows = game.add.group();
             arrows.create(this.world.centerX - 115, this.world.centerY + 150, 'arrow').angle = 180;
             arrows.create(this.world.centerX + 115, this.world.centerY + 150, 'arrow').angle = 0;
             arrows.create(this.world.centerX, this.world.centerY + 35, 'arrow').angle = -90;
+            arrows.create(this.world.centerX - 205, this.world.centerY + 150, 'slidearrow').angle = 180;
+            arrows.create(this.world.centerX + 205, this.world.centerY + 150, 'slidearrow').angle = 0;    
             arrows.forEach(function (arrow) {
                 arrow.anchor.setTo(0.5, 0.5);
                 arrow.visible = false;
+                arrow.scale.set(1.4);
                 arrow.smoothed = false;
                 arrow.inputEnabled = true;
                 arrow.events.onInputDown.add(arrowClick, this);
 
             });
 
-            // // TODO: Add Slide arrows to group
-            // slideArrows = game.add.group();
-            // slideArrows.create(this.world.centerX - 205, this.world.centerY + 150, 'slidearrow').angle = 180;
-            // slideArrows.create(this.world.centerX + 205, this.world.centerY + 150, 'slidearrow').angle = 0;    
-            // slideArrows.forEach(function(arrow){
-            //         arrow.anchor.setTo(0.5, 0.5);
-            //         arrow.visible = false;
-            //         arrow.smoothed = false;
-            //         arrow.inputEnabled = true;
-            //         arrow.events.onInputDown.add(slideArrowClick, this);
-
-            // }); 
 
             // // Music note
             note = game.add.sprite(this.world.centerX - 265, this.world.centerY + 280, 'note');
@@ -235,6 +228,7 @@
                 }
             }
             else {
+                failCounter = 0;
                 currScore += 10;
                 scoreText.text = 'Score:' + currScore;
             }
@@ -246,35 +240,14 @@
             var newArrow = arrows.getRandom();
             newArrow.visible = true;
             newArrow.shownTime = game.time.time;
+            
+            if(simultaneousArrows > 1 && game.rnd.integerInRange(1,3) == 3){
+                var secondArrow = arrows.getRandom();
+                secondArrow.visible = true;
+                secondArrow.shownTime = game.time.time;
+            }
+
         }
-
-        // function slideArrowClick (slideArrow) {
-
-        //     //hide  arrow
-        //     timeToClickSlideArrow = game.time.elapsedSecondsSince(slideArrowShownTime);    
-        //     if(timeToClickSlideArrow < 0.5)
-        //         console.log("GREAT!");
-        //     else if(timeToClickSlideArrow < 1)
-        //         console.log("OK");
-        //     else
-        //         console.log("Poor");
-        //     slideArrow.visible = false;
-        //     slideButtonPressed = true;
-        //     dancer.animations.play('dance' + game.rnd.integerInRange(1, 4),10,true);
-        //     var slideOffset = 0;
-        //     var rotateOffset = 0;
-        //     if(slideArrow.angle == 0) {
-        //         slideOffset = 200;
-        //         rotateOffset = 15
-        //     }
-        //     else {
-        //         slideOffset = -200;
-        //         rotateOffset = -15
-        //     }
-        //     game.add.tween(dancer).to({x: game.world.centerX + slideOffset}, 500).to({x: game.world.centerX}, 500).start();    
-        //     game.add.tween(dancer).to({angle: rotateOffset}, 500).to({angle: 2}, 500).to({angle: 0}, 500).start();
-
-        // }
 
 
         function getPostivePhrase() {
@@ -328,8 +301,22 @@
 
             arrow.visible = false;
             dancer.animations.play('dance' + game.rnd.integerInRange(1, 4), 10, true);
-            if (arrow.angle == -90)
+            if (arrow.key == 'slidearrow') {
+                var slideOffset = 0;
+                var rotateOffset = 0;
+                if (arrow.angle == 0) {
+                    slideOffset = 200;
+                    rotateOffset = 15
+                }
+                else {
+                    slideOffset = -200;
+                    rotateOffset = -15
+                }
+                game.add.tween(dancer).to({ x: game.world.centerX + slideOffset }, 500).to({ x: game.world.centerX }, 500).start();
+                game.add.tween(dancer).to({ angle: rotateOffset }, 500).to({ angle: 2 }, 500).to({ angle: 0 }, 500).start();
+            } else if (arrow.angle == -90) {
                 game.add.tween(dancer).to({ y: game.world.centerY + 105 }, 200).to({ y: game.world.centerY + 175 }, 200).start();
+            }
         }
 
         function update() {
@@ -342,9 +329,9 @@
                 if (moveCounter > 5 && moveCounter < 10) {
                     arrowInterval = 1.0;
                 } else if (moveCounter > 10 && moveCounter < 15) {
-                    arrowInterval = 0.8;
+                    simultaneousArrows = 2;
                 } else if (moveCounter > 15 && moveCounter < 20) {
-                    arrowInterval = 0.6;
+                    arrowInterval = 0.8;
                 }
             }
         }
