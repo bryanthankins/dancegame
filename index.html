@@ -243,13 +243,13 @@
             newArrow.visible = true;
             newArrow.shownTime = game.time.time;
             
-            if(simultaneousArrows > 1 && game.rnd.integerInRange(1,2) == 2){
+            if(simultaneousArrows > 1 && game.rnd.integerInRange(1,3) == 3){
                 var secondArrow = arrows.getRandom();
                 secondArrow.visible = true;
                 secondArrow.shownTime = game.time.time;
             }
 
-            if(simultaneousArrows > 2 && game.rnd.integerInRange(1,2) == 2){
+            if(simultaneousArrows > 2 && game.rnd.integerInRange(1,3) == 3){
                 var thirdArrow = arrows.getRandom();
                 thirdArrow.visible = true;
                 thirdArrow.shownTime = game.time.time;
