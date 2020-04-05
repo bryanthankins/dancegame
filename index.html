@@ -361,10 +361,10 @@ function update() {
             // Speed up
             if(moveCounter > 5 && moveCounter < 10){
                 arrowInterval = 1.0;
-                console.log("arrowInterval = 1");
             }else if(moveCounter > 10 && moveCounter < 15){
                 arrowInterval = 0.8;
-                console.log("arrowInterval = .8");
+            } else if(moveCounter > 15 && moveCounter < 20){
+                arrowInterval = 0.6;
             }
     }
 }
