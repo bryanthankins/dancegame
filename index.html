@@ -290,7 +290,7 @@
         function arrowClick(arrow) {
             //hide  arrow
             timeToClickArrow = game.time.elapsedSecondsSince(arrow.shownTime);
-            if (timeToClickArrow < 0.5) {
+            if (timeToClickArrow < 0.35) {
                 var bonusText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command', getPostivePhrase(), 24);
                 bonusText.anchor.setTo(0.5);
                 bonusText.smoothed = false;
