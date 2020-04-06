@@ -71,7 +71,7 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "5.0";
+        var version = "5.1";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
         var emitter;
@@ -107,13 +107,13 @@
             back.smoothed = false;
 
               //Emitter
-            // game.physics.startSystem(Phaser.Physics.ARCADE);
-            // emitter = game.add.emitter(0, 0, 100);
-            // emitter.makeParticles('diamond');
-            // emitter.gravity = 600;
-            // emitter.enabled = false;
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            emitter = game.add.emitter(0, 0, 100);
+            emitter.makeParticles('diamond');
+            emitter.gravity = 600;
+            emitter.on = false;
 
-            // game.input.onDown.add(particleBurst, this);
+            //game.input.onDown.add(particleBurst, this);
 
             // // Add Text
             bmpText = game.add.bitmapText(this.world.centerX, this.world.centerY - 150, 'carrier_command', 'SOCIAL DISTANCE', 30);
@@ -129,7 +129,7 @@
             scoreText.smoothed = false;
             scoreText.visible = false;
 
-            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Level: ' + version, 24);
+            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Version: ' + version, 24);
             levelText.anchor.setTo(0.5);
             levelText.smoothed = false;
             levelText.visible = false;
@@ -327,12 +327,12 @@
                 successSound.play();
                 currScore += 50;
                 successCount += 1;
-                // if (successCount >= numSuccessToShowEmitter) {
-                //     emitter.enabled = true;
-                //     successCount  = 0;
-                // } else {
-                //     emitter.enabled = false;
-                // }
+                if (successCount >= numSuccessToShowEmitter) {
+                    game.input.onDown.add(particleBurst, this);
+                    successCount  = 0;
+                } else {
+                    game.input.onDown.remove(particleBurst, this);
+                }
 
 
             }
@@ -379,10 +379,10 @@
                 } else if (currScore > 1500 && currScore < 2500) {
                     simultaneousArrows = 2;
                 } else if (currScore > 3500 && currScore < 4000) {
-                    arrowInterval = 0.7;
+                    arrowInterval = 0.9;
                     simultaneousArrows = 3;
                 } else if (currScore > 4000) {
-                    arrowInterval = 0.6;
+                    arrowInterval = 0.8;
                     simultaneousArrows = 4;
                 }
             }
