@@ -70,7 +70,8 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "4.6";
+        var version = "4.7";
+        var successSpeedTime = 0.37;
 
         function create() {
             // Game set-up
@@ -245,10 +246,15 @@
                 secondArrow.shownTime = game.time.time;
             }
 
-            if(simultaneousArrows > 2 && game.rnd.integerInRange(1,3) == 3){
+            if(simultaneousArrows > 2 && game.rnd.integerInRange(1,2) == 2){
                 var thirdArrow = arrows.getRandom();
                 thirdArrow.visible = true;
                 thirdArrow.shownTime = game.time.time;
+            }
+            if(simultaneousArrows > 3 && game.rnd.integerInRange(1,2) == 2){
+                var fourthArrow = arrows.getRandom();
+                fourthArrow.visible = true;
+                fourthArrow.shownTime = game.time.time;
             }
 
         }
@@ -288,7 +294,7 @@
         function arrowClick(arrow) {
             //hide  arrow
             timeToClickArrow = game.time.elapsedSecondsSince(arrow.shownTime);
-            if (timeToClickArrow < 0.40) {
+            if (timeToClickArrow < successSpeedTime) {
                 var bonusText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command', getPostivePhrase(), 24);
                 bonusText.anchor.setTo(0.5);
                 bonusText.smoothed = false;
@@ -341,9 +347,12 @@
                     arrowInterval = 1.0;
                 } else if (currScore > 1500 && currScore < 2500) {
                     simultaneousArrows = 2;
-                } else if (currScore > 4000) {
+                } else if (currScore > 3500 && currScore < 4500) {
                     arrowInterval = 0.7;
                     simultaneousArrows = 3;
+                } else if (currScore > 4500) {
+                    arrowInterval = 0.7;
+                    simultaneousArrows = 4;
                 }
             }
         }
