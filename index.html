@@ -71,10 +71,12 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "4.8";
+        var version = "5.0";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
         var emitter;
+        var numSuccessToShowEmitter = 2;
+        var successCount = 0;
 
         function create() {
             // Game set-up
@@ -103,6 +105,15 @@
             back = game.add.image(game.world.centerX, game.world.centerY, 'stage');
             back.anchor.setTo(0.5);
             back.smoothed = false;
+
+              //Emitter
+            // game.physics.startSystem(Phaser.Physics.ARCADE);
+            // emitter = game.add.emitter(0, 0, 100);
+            // emitter.makeParticles('diamond');
+            // emitter.gravity = 600;
+            // emitter.enabled = false;
+
+            // game.input.onDown.add(particleBurst, this);
 
             // // Add Text
             bmpText = game.add.bitmapText(this.world.centerX, this.world.centerY - 150, 'carrier_command', 'SOCIAL DISTANCE', 30);
@@ -167,20 +178,14 @@
             note.inputEnabled = true;
             note.events.onInputDown.add(noteClick, this);
 
-            //Emitter
-            game.physics.startSystem(Phaser.Physics.ARCADE);
-            emitter = game.add.emitter(0, 0, 100);
-            emitter.makeParticles('diamond');
-            emitter.gravity = 200;
-
-            game.input.onDown.add(particleBurst, this);
+          
         }
 
             function particleBurst(pointer) {
 
                 emitter.x = pointer.x;
                 emitter.y = pointer.y;
-                emitter.start(true, 2000, null, 10);
+                emitter.start(true, 750, null, 8);
             }
 
         function startGame() {
@@ -321,6 +326,15 @@
 
                 successSound.play();
                 currScore += 50;
+                successCount += 1;
+                // if (successCount >= numSuccessToShowEmitter) {
+                //     emitter.enabled = true;
+                //     successCount  = 0;
+                // } else {
+                //     emitter.enabled = false;
+                // }
+
+
             }
             else {
                 successSound.play();
@@ -364,10 +378,11 @@
                     arrowInterval = 1.0;
                 } else if (currScore > 1500 && currScore < 2500) {
                     simultaneousArrows = 2;
-                } else if (currScore > 3500 && currScore < 4500) {
+                } else if (currScore > 3500 && currScore < 4000) {
                     arrowInterval = 0.7;
                     simultaneousArrows = 3;
-                } else if (currScore > 4500) {
+                } else if (currScore > 4000) {
+                    arrowInterval = 0.6;
                     simultaneousArrows = 4;
                 }
             }
