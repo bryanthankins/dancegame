@@ -16,11 +16,8 @@
 
     <script>
 
-var w = window.innerWidth * window.devicePixelRatio; 
-var h = window.innerHeight * window.devicePixelRatio;
 
-        //var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
-        var game = new Phaser.Game(w, h, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
         function preload() {
 
@@ -76,7 +73,7 @@ var h = window.innerHeight * window.devicePixelRatio;
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "5.7";
+        var version = "5.8";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
         // var emitter;
