@@ -34,6 +34,7 @@
             game.load.image('arrow', 'assets/sprites/arrow.png');
             game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
             game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
+            game.load.image('diamond', 'assets/sprites/diamond.png');
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
 
@@ -70,8 +71,10 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "4.7";
+        var version = "4.8";
         var successSpeedTime = 0.37;
+        var arrowPoints = 25;
+        var emitter;
 
         function create() {
             // Game set-up
@@ -86,6 +89,8 @@
                 game.scale.pageAlignVertically = true;
                 document.body.style.backgroundColor = '#000000';
             }
+
+
 
             // Add music
             music = game.add.audio('song', 0.5, true);
@@ -156,15 +161,27 @@
 
             });
 
-
             // // Music note
             note = game.add.sprite(this.world.centerX - 265, this.world.centerY + 280, 'note');
             note.anchor.setTo(0.5);
             note.inputEnabled = true;
             note.events.onInputDown.add(noteClick, this);
 
+            //Emitter
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            emitter = game.add.emitter(0, 0, 100);
+            emitter.makeParticles('diamond');
+            emitter.gravity = 200;
 
+            game.input.onDown.add(particleBurst, this);
         }
+
+            function particleBurst(pointer) {
+
+                emitter.x = pointer.x;
+                emitter.y = pointer.y;
+                emitter.start(true, 2000, null, 10);
+            }
 
         function startGame() {
 
@@ -231,7 +248,7 @@
             }
             else {
                 failCounter = 0;
-                currScore += 10;
+                currScore += arrowPoints;
                 scoreText.text = 'Score:' + currScore;
             }
 
@@ -351,7 +368,6 @@
                     arrowInterval = 0.7;
                     simultaneousArrows = 3;
                 } else if (currScore > 4500) {
-                    arrowInterval = 0.7;
                     simultaneousArrows = 4;
                 }
             }
