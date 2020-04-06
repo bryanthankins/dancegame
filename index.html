@@ -86,7 +86,7 @@
             }
 
             // Add music
-            music = game.add.audio('song', 0.5);
+            music = game.add.audio('song', 0.5, true);
             startSound = game.add.audio('start');
             successSound = game.add.audio('success');
             missSound = game.add.audio('miss');
@@ -208,10 +208,7 @@
                 missSound.play();
         }
 
-        function hasVisibleArrows() {
-            debugger;
-           
-        }
+   
 
         function startNewMove() {
             moveCounter++;
@@ -220,6 +217,7 @@
             arrows.forEach(function (arrow) {
                 if (arrow.visible) {
                     hasVisibleArrows = true;
+                    arrow.visible = false;
                 }
             });
 
@@ -234,9 +232,6 @@
                 currScore += 10;
                 scoreText.text = 'Score:' + currScore;
             }
-
-            // Hide existing arrows in collection
-            arrows.setAll('visible', false);
 
             // Get new random arrow and show
             var newArrow = arrows.getRandom();
@@ -292,7 +287,7 @@
         function arrowClick(arrow) {
             //hide  arrow
             timeToClickArrow = game.time.elapsedSecondsSince(arrow.shownTime);
-            if (timeToClickArrow < 0.35) {
+            if (timeToClickArrow < 0.45) {
                 var bonusText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command', getPostivePhrase(), 24);
                 bonusText.anchor.setTo(0.5);
                 bonusText.smoothed = false;
@@ -341,11 +336,11 @@
                 startNewMove();
 
                 // Speed up & Add more arrows
-                if (moveCounter > 10 && moveCounter < 15) {
+                if (currScore > 500 && currScore < 1500) {
                     arrowInterval = 1.0;
-                } else if (moveCounter > 15 && moveCounter < 20) {
+                } else if (currScore > 1500 && currScore < 2500) {
                     simultaneousArrows = 2;
-                } else if (moveCounter > 20) {
+                } else if (currScore > 4000) {
                     arrowInterval = 0.7;
                     simultaneousArrows = 3;
                 }
