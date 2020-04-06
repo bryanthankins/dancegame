@@ -70,6 +70,7 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
+        var version = "4.6";
 
         function create() {
             // Game set-up
@@ -111,7 +112,7 @@
             scoreText.smoothed = false;
             scoreText.visible = false;
 
-            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Level: 1', 24);
+            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Level: ' + version, 24);
             levelText.anchor.setTo(0.5);
             levelText.smoothed = false;
             levelText.visible = false;
@@ -287,7 +288,7 @@
         function arrowClick(arrow) {
             //hide  arrow
             timeToClickArrow = game.time.elapsedSecondsSince(arrow.shownTime);
-            if (timeToClickArrow < 0.45) {
+            if (timeToClickArrow < 0.40) {
                 var bonusText = game.add.bitmapText(game.world.centerX, game.world.centerY, 'carrier_command', getPostivePhrase(), 24);
                 bonusText.anchor.setTo(0.5);
                 bonusText.smoothed = false;
