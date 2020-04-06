@@ -72,11 +72,11 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "5.4";
+        var version = "5.5";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
-        var emitter;
-        var numSuccessToShowEmitter = 3;
+        // var emitter;
+        // var numSuccessToShowEmitter = 3;
         var fastClickCount = 0;
         var explosionAnimation;
 
@@ -85,10 +85,11 @@
             gameTimer = game.time.time;
             game.input.maxPointers = 3;
             game.scale.pageAlignHorizontally = true;
-            game.scale.pageAlignVertically = true;
+//            game.scale.pageAlignVertically = true;
             game.stage.backgroundColor = 0x000000;
             if (!game.device.desktop) {
                 game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                game.scale.setMinMax(game.width/2, game.height/2, game.width*2, game.height*2);
                 game.scale.pageAlignHorizontally = true;
                 game.scale.pageAlignVertically = true;
                 document.body.style.backgroundColor = '#000000';
@@ -109,11 +110,11 @@
             back.smoothed = false;
 
               //Emitter
-            game.physics.startSystem(Phaser.Physics.ARCADE);
-            emitter = game.add.emitter(0, 0, 100);
-            emitter.makeParticles('diamond');
-            emitter.gravity = 600;
-            emitter.on = false;
+            // game.physics.startSystem(Phaser.Physics.ARCADE);
+            // emitter = game.add.emitter(0, 0, 100);
+            // emitter.makeParticles('diamond');
+            // emitter.gravity = 600;
+            // emitter.on = false;
 
 
             // // Add Text
@@ -159,6 +160,7 @@
             explosionAnimation.anchor.setTo(0.5, 0.5);
             explosionAnimation.scale.set(3);
             explosionAnimation.animations.add('kaboom');
+            explosionAnimation.visible = false;
 
             // // Arrows
             arrows = game.add.group();
@@ -188,12 +190,12 @@
           
         }
 
-            function particleBurst(pointer) {
+            // function particleBurst(pointer) {
 
-                emitter.x = pointer.x;
-                emitter.y = pointer.y;
-                emitter.start(true, 750, null, 8);
-            }
+            //     emitter.x = pointer.x;
+            //     emitter.y = pointer.y;
+            //     emitter.start(true, 750, null, 8);
+            // }
 
         function startGame() {
 
@@ -333,9 +335,10 @@
               
                 currScore += 50;
                 fastClickCount += 1;
-                if (fastClickCount >= numSuccessToShowEmitter) {
+                if (fastClickCount >= 3) {
                     //game.input.onDown.add(particleBurst, this);
                     fastClickCount  = 0;
+                    explosionAnimation.visible = true;
                     explosionAnimation.reset(arrow.x, arrow.y);
                     explosionAnimation.play('kaboom', 30, false, true);
 
