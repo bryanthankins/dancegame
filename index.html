@@ -30,12 +30,18 @@
             game.load.audio('miss', ['assets/audio/button_fail.wav']);
             game.load.audio('end', ['assets/audio/dramatic.wav']);
 
-            game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
+            game.load.spritesheet('dancer1', 'assets/sprites/dancer1.png', 64, 64);
+            game.load.spritesheet('dancer2', 'assets/sprites/dancer2.png', 64, 64);
+            game.load.spritesheet('dancer3', 'assets/sprites/dancer3.png', 64, 64);
+
+            game.load.image('portrait1', 'assets/sprites/portrait1.png');
+            game.load.image('portrait2', 'assets/sprites/portrait2.png');
+            game.load.image('portrait3', 'assets/sprites/portrait3.png');
+
 
             game.load.image('arrow', 'assets/sprites/arrow.png');
             game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
             game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
-            game.load.image('diamond', 'assets/sprites/diamond.png');
             game.load.spritesheet('kaboom', 'assets/sprites/explosion.png', 64, 64, 23);
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
@@ -58,6 +64,7 @@
         var startText;
         var scoreText;
         var levelText;
+        var charText;
         var currScore = 0;
         var arrowShownTime;
         var timeToClickArrow;
@@ -76,10 +83,11 @@
         var version = "5.8";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
-        // var emitter;
-        // var numSuccessToShowEmitter = 3;
         var fastClickCount = 0;
         var explosionAnimation;
+        var level = 1;
+        var levels;
+        var versionText;
 
         function create() {
             // Game set-up
@@ -95,8 +103,6 @@
                 document.body.style.backgroundColor = '#000000';
             }
 
-
-
             // Add music
             music = game.add.audio('song', 0.5, true);
             startSound = game.add.audio('start');
@@ -108,14 +114,6 @@
             back = game.add.image(game.world.centerX, game.world.centerY, 'stage');
             back.anchor.setTo(0.5);
             back.smoothed = false;
-
-              //Emitter
-            // game.physics.startSystem(Phaser.Physics.ARCADE);
-            // emitter = game.add.emitter(0, 0, 100);
-            // emitter.makeParticles('diamond');
-            // emitter.gravity = 600;
-            // emitter.on = false;
-
 
             // // Add Text
             bmpText = game.add.bitmapText(this.world.centerX, this.world.centerY - 150, 'carrier_command', 'SOCIAL DISTANCE', 30);
@@ -131,10 +129,20 @@
             scoreText.smoothed = false;
             scoreText.visible = false;
 
-            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Version: ' + version, 24);
+            versionText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Version: ' + version, 24);
+            versionText.anchor.setTo(0.5);
+            versionText.smoothed = false;
+            versionText.visible = false;
+
+            levelText = game.add.bitmapText(this.world.centerX - 175, this.world.centerY + 285, 'carrier_command', 'Level: ', 20);
             levelText.anchor.setTo(0.5);
             levelText.smoothed = false;
             levelText.visible = false;
+
+            charText = game.add.bitmapText(this.world.centerX + 175, this.world.centerY + 285, 'carrier_command', 'Player: ', 20);
+            charText.anchor.setTo(0.5);
+            charText.smoothed = false;
+            charText.visible = false;
 
 
             startText = this.add.bitmapText(this.world.centerX, this.world.centerY, 'carrier_command', 'Tap to Start', 24);
@@ -142,18 +150,41 @@
             this.add.tween(startText).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
             this.add.tween(startText).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
             startText.inputEnabled = true;
-            game.input.onDown.addOnce(startGame, this);
+            startText.visible = false;
+            startText.events.onInputDown.add(startGame, this);
+            //game.input.onDown.addOnce(startGame, this);
 
             // // Dancer
-            dancer = game.add.sprite(this.world.centerX, this.world.centerY + 175, 'dancer', 5);
-            dancer.anchor.setTo(0.5);
-            dancer.scale.set(3);
-            dancer.smoothed = false;
-            dancer.animations.add('dance1', [0, 1, 2, 3, 4, 5, 6, 7]);
-            dancer.animations.add('dance2', [8, 9, 10, 11, 12, 13, 14, 15, 16]);
-            dancer.animations.add('dance3', [17, 18, 19, 20, 21, 22, 23, 24, 25]);
-            dancer.animations.add('dance4', [26, 27, 28, 29, 30, 31, 32, 33, 34]);
-            dancer.frame = 0; //happy frame
+            dancers = game.add.group();
+            dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer1', 5);
+            dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer2', 5);
+            dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer3', 5);
+            dancers.forEach(function (dancer) {
+                dancer.anchor.setTo(0.5);
+                dancer.scale.set(3);
+                dancer.smoothed = false;
+                dancer.visible = false;
+                dancer.animations.add('dance1', [0, 1, 2, 3, 4, 5, 6, 7]);
+                dancer.animations.add('dance2', [8, 9, 10, 11, 12, 13, 14, 15, 16]);
+                dancer.animations.add('dance3', [17, 18, 19, 20, 21, 22, 23, 24, 25]);
+                dancer.animations.add('dance4', [26, 27, 28, 29, 30, 31, 32, 33, 34]);
+                dancer.frame = 0; //happy frame
+            });
+
+            // Difficulty text
+            // levels = game.add.group();
+            // var levelText1 = game.add.bitmapText(this.world.centerX - 245, this.world.centerY - 200, 'carrier_command', 'EASY', 20);
+            // var levelText2 = game.add.bitmapText(this.world.centerX, this.world.centerY - 200, 'carrier_command', 'MED', 20);
+            // var levelText3 = game.add.bitmapText(this.world.centerX + 245, this.world.centerY - 200, 'carrier_command', 'HARD', 20);
+            // levels.add(levelText1);
+            // levels.add(levelText2);
+            // levels.add(levelText3);
+            // levels.forEach(function (level) {
+            //     level.smoothed = false;
+            //     level.anchor.setTo(0.5);
+            // });
+            
+            
 
             // explosion
             explosionAnimation = game.add.sprite(0, 0, 'kaboom');
@@ -181,32 +212,73 @@
 
             });
 
-            // // Music note
-            note = game.add.sprite(this.world.centerX - 265, this.world.centerY + 280, 'note');
-            note.anchor.setTo(0.5);
-            note.inputEnabled = true;
-            note.events.onInputDown.add(noteClick, this);
 
-          
+            // Portraits
+            portraits = game.add.group();
+            portraits.create(this.world.centerX - 245, this.world.centerY - 250, 'portrait1');
+            portraits.create(this.world.centerX, this.world.centerY - 250, 'portrait2');
+            portraits.create(this.world.centerX + 245, this.world.centerY - 250, 'portrait3');
+            portraits.forEach(function (portrait) {
+                portrait.anchor.setTo(0.5);
+                portrait.smoothed = false;
+                portrait.scale.set(2);
+                portrait.inputEnabled = true;
+                portrait.events.onInputDown.add(portraitClick, this);
+            });
+            
+
         }
 
-            // function particleBurst(pointer) {
+        function portraitClick(portrait) {
+            if(dancer) {
+                dancer.visible = false;
+            }
 
-            //     emitter.x = pointer.x;
-            //     emitter.y = pointer.y;
-            //     emitter.start(true, 750, null, 8);
-            // }
+
+            startSound.play();
+
+            var difficultyText;
+            var playerText;
+            if(portrait.key == 'portrait3') {
+                level = 3;
+                difficultyText  = "Level: Hard";
+                playerText = "Player: Bob";
+            }else if(portrait.key == 'portrait2') {
+                level = 2;
+                difficultyText  = "Level: Med";
+                playerText = "Player: Joe";
+            } else {
+                level = 1;
+                difficultyText  = "Level: Easy";
+                playerText = "Player: Sam";
+            }
+            
+            dancer = dancers.getAt(level - 1);
+            dancer.visible = true;
+            dancer.animations.play('dance' + game.rnd.integerInRange(1, 4), 10, true);
+            startText.visible = true;
+            levelText.text = difficultyText;
+            levelText.visible = true;
+            charText.text = playerText;
+            charText.visible = true;
+        }
+          
 
         function startGame() {
 
             music.play();
+            portraits.forEach(function (portrait) {
+                portrait.visible = false;
+            });
             dancer.animations.play('dance' + game.rnd.integerInRange(1, 4), 10, true);
             back.inputEnabled = false;
             bmpText.visible = false;
             bmpText2.visible = false;
             startText.visible = false;
             scoreText.visible = true;
-            levelText.visible = true;
+            versionText.visible = true;
+            levelText.visible = false;
+            charText.visible = false;
             startSound.play();
             gameRunning = true;
 
