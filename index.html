@@ -16,8 +16,11 @@
 
     <script>
 
+var w = window.innerWidth * window.devicePixelRatio; 
+var h = window.innerHeight * window.devicePixelRatio;
 
-        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+        //var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+        var game = new Phaser.Game(w, h, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
         function preload() {
 
@@ -31,6 +34,7 @@
             game.load.audio('end', ['assets/audio/dramatic.wav']);
 
             game.load.spritesheet('dancer', 'assets/sprites/dancer.png', 64, 64);
+
             game.load.image('arrow', 'assets/sprites/arrow.png');
             game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
             game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
@@ -72,7 +76,7 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "5.5";
+        var version = "5.6";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
         // var emitter;
@@ -88,7 +92,7 @@
 //            game.scale.pageAlignVertically = true;
             game.stage.backgroundColor = 0x000000;
             if (!game.device.desktop) {
-                game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
                 game.scale.setMinMax(game.width/2, game.height/2, game.width*2, game.height*2);
                 game.scale.pageAlignHorizontally = true;
                 game.scale.pageAlignVertically = true;
