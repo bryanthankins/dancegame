@@ -35,6 +35,7 @@
             game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
             game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
             game.load.image('diamond', 'assets/sprites/diamond.png');
+            game.load.spritesheet('kaboom', 'assets/sprites/explosion.png', 64, 64, 23);
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
 
@@ -71,12 +72,13 @@
         var gameRunning = false;
         var moveCounter = 0;
         var simultaneousArrows = 1;
-        var version = "5.3";
+        var version = "5.4";
         var successSpeedTime = 0.37;
         var arrowPoints = 25;
         var emitter;
         var numSuccessToShowEmitter = 3;
-        var successCount = 0;
+        var fastClickCount = 0;
+        var explosionAnimation;
 
         function create() {
             // Game set-up
@@ -151,6 +153,12 @@
             dancer.animations.add('dance3', [17, 18, 19, 20, 21, 22, 23, 24, 25]);
             dancer.animations.add('dance4', [26, 27, 28, 29, 30, 31, 32, 33, 34]);
             dancer.frame = 0; //happy frame
+
+            // explosion
+            explosionAnimation = game.add.sprite(0, 0, 'kaboom');
+            explosionAnimation.anchor.setTo(0.5, 0.5);
+            explosionAnimation.scale.set(3);
+            explosionAnimation.animations.add('kaboom');
 
             // // Arrows
             arrows = game.add.group();
@@ -322,22 +330,27 @@
 
                 game.add.tween(bonusText).to({ y: 0 }, 1500, Phaser.Easing.Linear.None, true);
                 game.add.tween(bonusText).to({ alpha: 0 }, 1500, Phaser.Easing.Linear.None, true);
-
-                successSound.play();
+              
                 currScore += 50;
-                successCount += 1;
-                if (successCount >= numSuccessToShowEmitter) {
-                    game.input.onDown.add(particleBurst, this);
-                    successCount  = 0;
+                fastClickCount += 1;
+                if (fastClickCount >= numSuccessToShowEmitter) {
+                    //game.input.onDown.add(particleBurst, this);
+                    fastClickCount  = 0;
+                    explosionAnimation.reset(arrow.x, arrow.y);
+                    explosionAnimation.play('kaboom', 30, false, true);
+
                 } else {
-                    game.input.onDown.remove(particleBurst, this);
+                   // game.input.onDown.remove(particleBurst, this);
                 }
 
 
             }
             else {
-                successSound.play();
+                fastClickCount  = 0;                
             }
+
+            successSound.play();
+
 
             arrow.visible = false;
             dancer.animations.play('dance' + game.rnd.integerInRange(1, 4), 10, true);
