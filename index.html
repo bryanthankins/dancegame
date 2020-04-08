@@ -50,7 +50,7 @@
 
 
         }
-        var version = "6.2";
+        var version = "6.3";
         var back;
         var mummy;
         var dancer;
@@ -276,7 +276,7 @@
             if(portrait.key == 'portrait3') {
                 level = 3;
                 difficultyText  = "Level: Hard";
-                playerText = "Player: Bob";
+                playerText = "Player: Bri";
                 music = song3;
                 back  = stage3;
                 winScore = 10000;
@@ -284,15 +284,15 @@
             }else if(portrait.key == 'portrait2') {
                 level = 2;
                 difficultyText  = "Level: Med";
-                playerText = "Player: Joe";
+                playerText = "Player: Caleb";
                 music = song2;
                 back  = stage2;
-                winScore = 5000;
+                winScore = 6000;
                 arrowInterval = 1.1;
             } else {
                 level = 1;
                 difficultyText  = "Level: Easy";
-                playerText = "Player: Sam";
+                playerText = "Player: Jaana";
                 music = song1;
                 successSpeedTime = 0.45;
                 winScore = 3500;
@@ -552,12 +552,12 @@
                         simultaneousArrows = 3;
                     } else if (currScore > 3500 && currScore < 4000) {
                         arrowInterval = 0.6;
-                    } else if (currScore > 4000) {
+                    } else if (currScore > 6000) {
                         arrowInterval = 0.5;
                         simultaneousArrows = 4;
-                    } else if (currScore > 5000) {
+                    } else if (currScore > 8000) {
                         arrowInterval = 0.45;
-                    } else if (currScore > 6000) {
+                    } else if (currScore > 9000) {
                         arrowInterval = 0.40;
                     }
                     
