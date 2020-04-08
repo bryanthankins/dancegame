@@ -98,6 +98,7 @@
         var stage1;
         var stage2;
         var stage3;
+        var winScore;
 
         function create() {
             // Game set-up
@@ -278,6 +279,7 @@
                 playerText = "Player: Bob";
                 music = song3;
                 back  = stage3;
+                winScore = 10000;
                 arrowInterval = 1.0;
             }else if(portrait.key == 'portrait2') {
                 level = 2;
@@ -285,12 +287,15 @@
                 playerText = "Player: Joe";
                 music = song2;
                 back  = stage2;
+                winScore = 5000;
                 arrowInterval = 1.1;
             } else {
                 level = 1;
                 difficultyText  = "Level: Easy";
                 playerText = "Player: Sam";
                 music = song1;
+                successSpeedTime = 0.45;
+                winScore = 3500;
                 back = stage1;
             }
             music.play();
@@ -451,7 +456,7 @@
                 fastClickCount += 1;
                 if (fastClickCount >= 3) {
                     //game.input.onDown.add(particleBurst, this);
-                    fastClickCount  = 0;
+                    //fastClickCount  = 0;
                     explosionAnimation.visible = true;
                     explosionAnimation.reset(arrow.x, arrow.y);
                     explosionAnimation.play('kaboom', 30, false, true);
@@ -494,6 +499,10 @@
             } else if (arrow.angle == -90) {
                 game.add.tween(dancer).to({ y: game.world.centerY + 105 }, 200).to({ y: game.world.centerY + 175 }, 200).start();
             }
+
+            if(currScore >= winScore) {
+                endGame();
+            }
         }
 
         function update() {
@@ -533,17 +542,22 @@
                 }
                 else if(level == 3){
                     if (currScore > 500 && currScore < 1500) {
-                        arrowInterval = 0.9;
+                        arrowInterval = 0.8;
                         simultaneousArrows = 2;
                     } else if (currScore > 1500 && currScore < 2500) {
-                        arrowInterval = 0.8;
+                        arrowInterval = 0.7;
                         simultaneousArrows = 3;
                     } else if (currScore > 3500 && currScore < 4000) {
-                        arrowInterval = 0.7;
-                    } else if (currScore > 4000) {
                         arrowInterval = 0.6;
+                    } else if (currScore > 4000) {
+                        arrowInterval = 0.5;
                         simultaneousArrows = 4;
+                    } else if (currScore > 5000) {
+                        arrowInterval = 0.45;
+                    } else if (currScore > 6000) {
+                        arrowInterval = 0.40;
                     }
+                    
                 }
                 
             }
