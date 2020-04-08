@@ -533,15 +533,15 @@
                 }
                 else if(level == 3){
                     if (currScore > 500 && currScore < 1500) {
-                        arrowInterval = 1.1;
-                    } else if (currScore > 1500 && currScore < 2500) {
-                        arrowInterval = 1.0;
+                        arrowInterval = 0.9;
                         simultaneousArrows = 2;
-                    } else if (currScore > 3500 && currScore < 4000) {
+                    } else if (currScore > 1500 && currScore < 2500) {
                         arrowInterval = 0.8;
                         simultaneousArrows = 3;
-                    } else if (currScore > 4000) {
+                    } else if (currScore > 3500 && currScore < 4000) {
                         arrowInterval = 0.7;
+                    } else if (currScore > 4000) {
+                        arrowInterval = 0.6;
                         simultaneousArrows = 4;
                     }
                 }
