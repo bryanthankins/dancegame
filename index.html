@@ -21,9 +21,10 @@
 
         function preload() {
 
+            game.load.image('stage0', 'assets/pics/stage.png');
             game.load.image('stage1', 'assets/pics/discopixel.png');
-            game.load.image('stage2', 'assets/pics/stage.png');
-            game.load.image('stage3', 'assets/pics/stage.png');
+            game.load.image('stage2', 'assets/pics/latin.png');
+            game.load.image('stage3', 'assets/pics/space.png');
             game.load.audio('song1', ['assets/audio/frenchydafty.mp3']);
             game.load.audio('song2', ['assets/audio/latinflavour.mp3']);
             game.load.audio('song3', ['assets/audio/space.mp3']);
@@ -124,12 +125,18 @@
             endSound = game.add.audio('end');
 
             // // Background
+            stage0 = game.add.image(game.world.centerX, game.world.centerY, 'stage0');
+            stage0.visible = true;
+            stage0.anchor.setTo(0.5);
+            stage0.smoothed = false;
+
             stage1 = game.add.image(game.world.centerX, game.world.centerY, 'stage1');
+            stage1.visible = false;
             stage1.anchor.setTo(0.5);
             stage1.smoothed = false;
 
             stage2 = game.add.image(game.world.centerX, game.world.centerY, 'stage2');
-            stage2.visible = true;
+            stage2.visible = false;
             stage2.anchor.setTo(0.5);
             stage2.smoothed = false;
 
