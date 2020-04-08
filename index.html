@@ -50,7 +50,7 @@
 
 
         }
-        var version = "6.1";
+        var version = "6.2";
         var back;
         var mummy;
         var dancer;
@@ -381,8 +381,8 @@
             }
             else {
                 failCounter = 0;
-                currScore += arrowPoints;
-                scoreText.text = 'Score:' + currScore;
+                // currScore += arrowPoints;
+                // scoreText.text = 'Score:' + currScore;
             }
 
             // Get new random arrow and show
@@ -472,6 +472,9 @@
             }
 
             successSound.play();
+
+            currScore += arrowPoints;
+            scoreText.text = 'Score:' + currScore;
 
 
             arrow.visible = false;
