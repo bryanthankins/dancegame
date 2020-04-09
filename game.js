@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.0";
+    this.version = "7.1";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -394,12 +394,12 @@ BasicGame.Game.prototype = {
         if(this.simultaneousArrows > 2 && this.game.rnd.integerInRange(1,2) == 2){
             var thirdArrow = this.arrows.getRandom();
             thirdArrow.visible = true;
-            thirdArrow.shownTime = game.time.time;
+            thirdArrow.shownTime = this.game.time.time;
         }
         if(this.simultaneousArrows > 3 && this.game.rnd.integerInRange(1,2) == 2){
             var fourthArrow = this.arrows.getRandom();
             fourthArrow.visible = true;
-            fourthArrow.shownTime = game.time.time;
+            fourthArrow.shownTime = this.game.time.time;
         }
     
     },
