@@ -27,6 +27,7 @@ BasicGame.Boot.prototype = {
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         this.load.image('preloaderBar', 'assets/sprites/loading.png');
+        this.load.image('preloaderStage', 'assets/pics/preloader.png');
 
     },
 

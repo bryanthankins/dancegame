@@ -12,8 +12,12 @@ BasicGame.Preloader.prototype = {
 
 		//	These are the assets we loaded in Boot.js
 		//	A nice sparkly background and a loading progress bar
+        
+        this.preloaderStage = this.add.image(this.game.world.centerX, this.game.world.centerY, 'preloaderStage');
+        this.preloaderStage.anchor.setTo(0.5);
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloaderBar');
         this.preloadBar.anchor.setTo(0.5);
+
 
 		//	This sets the preloadBar sprite as a loader sprite.
 		//	What that does is automatically crop the sprite from 0 to full-width
