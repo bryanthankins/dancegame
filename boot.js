@@ -12,16 +12,11 @@ BasicGame.Boot.prototype = {
         this.scale.pageAlignHorizontally = true;
         this.stage.backgroundColor = 0x000000;
         if (!this.game.device.desktop) {
-            /* old
+
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
-            */
 
-
-            //this.scale.setMinMax(480, 260, 1024, 768);
-            this.scale.forceLandscape = true;
-            this.scale.pageAlignHorizontally = true;
 
             document.body.style.backgroundColor = '#000000';
         }
