@@ -46,6 +46,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('portrait1', 'assets/sprites/biopic1.png');
         this.game.load.image('portrait2', 'assets/sprites/biopic2.png');
         this.game.load.image('portrait3', 'assets/sprites/biopic3.png');
+        this.game.load.image('startBtn', 'assets/sprites/start.png');
     
     
         this.game.load.image('arrow', 'assets/sprites/arrow.png');

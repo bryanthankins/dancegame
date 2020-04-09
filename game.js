@@ -23,53 +23,6 @@ BasicGame.Game = function (game) {
     //  You can use any of these from any function within this State.
     //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
 
-
-var back;
-var mummy;
-var dancer;
-var anim;
-var loopText;
-var timer;
-
-var arrows;
-var note;
-
-var bmpText;
-var bmpText2;
-var startText;
-var scoreText;
-var levelText;
-var charText;
-
-var arrowShownTime;
-var timeToClickArrow;
-var slideArrowShownTime;
-var timeToClickSlideArrow;
-var slideArrows;
-var currSlideArrow;
-var startSound;
-var successSound;
-var missSound;
-var endSound;
-var gameTimer;
-
-
-
-var explosionAnimation;
-
-var levels;
-var versionText;
-var song1;
-var song2;
-var song3;
-var music;
-var stage1;
-var stage2;
-var stage3;
-var winScore;
-
-
-
 };
 
 BasicGame.Game.prototype = {
@@ -156,18 +109,7 @@ BasicGame.Game.prototype = {
     this.charText.anchor.setTo(0.5);
     this.charText.smoothed = false;
     this.charText.visible = false;
-
-
-    this.startText = this.add.bitmapText(this.world.centerX, this.world.centerY, 'carrier_command', 'Tap to Start', 24);
-    this.startText.anchor.x = 0.5;
-    this.add.tween(this.startText).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
-    this.add.tween(this.startText).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
-    this.startText.inputEnabled = true;
-    this.startText.visible = false;
-    this.startText.events.onInputDown.add(this.startGame, this);
-    //this.game.input.onDown.addOnce(startGame, this);
-
-    
+   
 
     // // Dancer
     this.dancers = this.game.add.group();
@@ -230,6 +172,17 @@ BasicGame.Game.prototype = {
         portrait.scale.set(2);
         portrait.inputEnabled = true;
     });
+
+    // Start Button
+    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY, 'startBtn');
+    this.startBtn.anchor.setTo(0.5);
+    this.startBtn.scale.set(2);
+    this.startBtn.smoothed = false;
+    this.startBtn.inputEnabled = true;
+    this.startBtn.visible = false;
+    this.startBtn.events.onInputDown.add(this.startGame, this);
+    this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
+    this.add.tween(this.startBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
 
     },
 
@@ -351,7 +304,7 @@ BasicGame.Game.prototype = {
         this.dancer = this.dancers.getAt(this.level - 1);
         this.dancer.visible = true;
         this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
-        this.startText.visible = true;
+        this.startBtn.visible = true;
         this.levelText.text = difficultyText;
         this.levelText.visible = true;
         this.charText.text = playerText;
@@ -368,7 +321,7 @@ BasicGame.Game.prototype = {
         this.back.inputEnabled = false;
         this.bmpText.visible = false;
         this.bmpText2.visible = false;
-        this.startText.visible = false;
+        this.startBtn.visible = false;
         this.scoreText.visible = true;
         this.versionText.visible = true;
         this.levelText.visible = false;
