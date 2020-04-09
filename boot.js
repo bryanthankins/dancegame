@@ -11,6 +11,7 @@ BasicGame.Boot.prototype = {
         this.input.maxPointers = 3;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+        this.scale.forceLandscape = true;
         this.stage.backgroundColor = 0x000000;
         if (!this.game.device.desktop) {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
