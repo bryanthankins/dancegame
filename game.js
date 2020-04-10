@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.1";
+    this.version = "7.2";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -79,21 +79,25 @@ BasicGame.Game.prototype = {
     this.stage3.smoothed = false;
 
     this.back = this.stage2;
-    
 
-    // // Add Text
-    this.bmpText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 150, 'carrier_command', 'SOCIAL DISTANCE', 30);
-    this.bmpText.smoothed = false;
-    this.bmpText.anchor.setTo(0.5);
+    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 50, 'carrier_command', 'Choose Character to Start', 15);
+    this.chooseCharText.smoothed = false;
+    this.chooseCharText.anchor.setTo(0.5);
 
-    this.bmpText2 = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 100, 'carrier_command', 'Dancing', 25);
-    this.bmpText2.anchor.setTo(0.5);
-    this.bmpText2.smoothed = false;
-
-    this.scoreText = this.game.add.bitmapText(this.world.centerX + 175, this.world.centerY - 275, 'carrier_command', 'Score: 0', 24);
-    this.scoreText.anchor.setTo(0.5);
-    this.scoreText.smoothed = false;
+    this.scoreText = this.game.add.text(this.world.centerX + 175, this.world.centerY - 275, "SCORE: 0");
+    this.scoreText.anchor.setTo(0.5, 0.5);
+    this.scoreText.font = 'Press Start 2P';
+    this.scoreText.fontSize = 25;
+    this.scoreGrd = this.scoreText.context.createLinearGradient(0, 0, 0, this.scoreText.canvas.height);
+    this.scoreGrd.addColorStop(0, '#FFFFCC');   
+    this.scoreGrd.addColorStop(1, '#FFFF13');
+    this.scoreText.fill = this.scoreGrd;
     this.scoreText.visible = false;
+    this.scoreText.align = 'center';
+    this.scoreText.stroke = '#000000';
+    this.scoreText.strokeThickness = 2;
+    this.scoreText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
 
     this.versionText = this.game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Version: ' + this.version, 24);
     this.versionText.anchor.setTo(0.5);
@@ -109,6 +113,24 @@ BasicGame.Game.prototype = {
     this.charText.anchor.setTo(0.5);
     this.charText.smoothed = false;
     this.charText.visible = false;
+
+
+    // Title text
+    this.titleText = this.game.add.text(this.world.centerX, this.world.centerY - 125, "SOCIAL DISTANCE \nDANCING");
+    this.titleText.anchor.setTo(0.5);
+
+    this.titleText.font = 'Press Start 2P';
+    this.titleText.fontSize = 35;
+
+    this.grd = this.titleText.context.createLinearGradient(0, 0, 0, this.titleText.canvas.height);
+    this.grd.addColorStop(0, '#FFFFCC');   
+    this.grd.addColorStop(1, '#FFFF13');
+    this.titleText.fill = this.grd;
+
+    this.titleText.align = 'center';
+    this.titleText.stroke = '#000000';
+    this.titleText.strokeThickness = 2;
+    this.titleText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
    
 
     // // Dancer
@@ -187,6 +209,7 @@ BasicGame.Game.prototype = {
     },
 
     update: function () {
+        
         if (this.game.time.elapsedSecondsSince(this.gameTimer) > this.arrowInterval && this.gameRunning) {
             this.gameTimer = this.game.time.time;
     
@@ -243,6 +266,7 @@ BasicGame.Game.prototype = {
             
         }
 
+
     },
 
     quitGame: function (pointer) {
@@ -268,7 +292,7 @@ BasicGame.Game.prototype = {
             this.back.visible = false;
         }
     
-        
+        this.chooseCharText.visible = false;
         this.startSound.play();
     
         var difficultyText;
@@ -319,8 +343,7 @@ BasicGame.Game.prototype = {
         });
         this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
         this.back.inputEnabled = false;
-        this.bmpText.visible = false;
-        this.bmpText2.visible = false;
+        this.titleText.visible = false;
         this.startBtn.visible = false;
         this.scoreText.visible = true;
         this.versionText.visible = true;
@@ -333,9 +356,28 @@ BasicGame.Game.prototype = {
     
     
     endGame: function() {
+        
         this.gameRunning = false
-        var failText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 70, 'carrier_command', 'GAME OVER', 44);
-        failText.anchor.x = 0.5;
+
+        this.failText = this.game.add.text(this.world.centerX, this.world.centerY - 70, "GAME OVER");
+        this.failText.anchor.setTo(0.5);
+    
+        this.failText.font = 'Press Start 2P';
+        this.failText.fontSize = 50;
+    
+        this.grd = this.failText.context.createLinearGradient(0, 0, 0, this.failText.canvas.height);
+        this.grd.addColorStop(0, '#FFFFCC');   
+        this.grd.addColorStop(1, '#FFFF13');
+        this.failText.fill = this.grd;
+    
+        this.failText.align = 'center';
+        this.failText.stroke = '#000000';
+        this.failText.strokeThickness = 2;
+        this.failText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
+    
+
+        this.failText.anchor.x = 0.5;
         this.dancer.animations.stop(null, true);
         this.dancer.frame = 7; //sad frame
         this.endSound.play();
@@ -463,7 +505,10 @@ BasicGame.Game.prototype = {
         this.successSound.play();
     
         this.currScore += this.arrowPoints;
-        this.scoreText.text = 'Score:' + this.currScore;
+        this.scoreText.text = 'SCORE:' + this.currScore;
+        if (timeToClickArrow < this.successSpeedTime) {
+            this.game.add.tween(this.scoreText).to({ fontSize: 30 }, 250).to({ fontSize: 25 }, 250).start();
+        }
     
     
         arrow.visible = false;

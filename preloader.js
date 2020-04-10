@@ -6,7 +6,9 @@ BasicGame.Preloader = function (game) {
 
 };
 
+
 BasicGame.Preloader.prototype = {
+
 
 	preload: function () {
 
@@ -54,7 +56,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('diagonalarrow', 'assets/sprites/diagonalarrow.png');
         this.game.load.spritesheet('kaboom', 'assets/sprites/explosion.png', 64, 64, 23);
         this.game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
-		//	+ lots of other required assets here
+
 
 	},
 
