@@ -78,7 +78,7 @@ BasicGame.Game.prototype = {
     this.stage3.anchor.setTo(0.5);
     this.stage3.smoothed = false;
 
-    this.back = this.stage2;
+    this.back = this.stage0;
 
     this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 50, 'carrier_command', 'Choose Character to Start', 15);
     this.chooseCharText.smoothed = false;
@@ -131,6 +131,45 @@ BasicGame.Game.prototype = {
     this.titleText.stroke = '#000000';
     this.titleText.strokeThickness = 2;
     this.titleText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
+    // Fail Text
+    this.failText = this.game.add.text(this.world.centerX, this.world.centerY - 70, "GAME OVER");
+    this.failText.anchor.setTo(0.5);
+
+    this.failText.font = 'Press Start 2P';
+    this.failText.fontSize = 50;
+
+    this.grd = this.failText.context.createLinearGradient(0, 0, 0, this.failText.canvas.height);
+    this.grd.addColorStop(0, '#FFFFCC');   
+    this.grd.addColorStop(1, '#FFFF13');
+    this.failText.fill = this.grd;
+
+    this.failText.align = 'center';
+    this.failText.stroke = '#000000';
+    this.failText.strokeThickness = 2;
+    this.failText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    this.failText.anchor.x = 0.5;
+    this.failText.visible = false;
+
+    // Win Text
+    this.winText = this.game.add.text(this.world.centerX, this.world.centerY - 70, "YOU WIN!");
+    this.winText.anchor.setTo(0.5);
+
+    this.winText.font = 'Press Start 2P';
+    this.winText.fontSize = 60;
+
+    this.grd = this.winText.context.createLinearGradient(0, 0, 0, this.winText.canvas.height);
+    this.grd.addColorStop(0, '#FFFFCC');   
+    this.grd.addColorStop(1, '#FFFF13');
+    this.winText.fill = this.grd;
+
+    this.winText.align = 'center';
+    this.winText.stroke = '#000000';
+    this.winText.strokeThickness = 2;
+    this.winText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    this.winText.anchor.x = 0.5;
+    this.winText.visible = false;
+
    
 
     // // Dancer
@@ -266,18 +305,12 @@ BasicGame.Game.prototype = {
             
         }
 
+        
+
 
     },
 
-    quitGame: function (pointer) {
-
-        //  Here you should destroy anything you no longer need.
-        //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
-
-        //  Then let's go back to the main menu.
-       // this.state.start('MainMenu');
-
-    },
+    
 
     portraitClick: function (portrait) {
         if(this.dancer) {
@@ -342,7 +375,6 @@ BasicGame.Game.prototype = {
             portrait.visible = false;
         });
         this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
-        this.back.inputEnabled = false;
         this.titleText.visible = false;
         this.startBtn.visible = false;
         this.scoreText.visible = true;
@@ -353,38 +385,66 @@ BasicGame.Game.prototype = {
         this.gameRunning = true;
     
     },
+    backToMenu: function() {
+        this.arrows.forEach(function (arrow) {
+            if (arrow.visible) {
+                arrow.visible = false;
+            }
+        });
+        this.portraits.forEach(function (portrait) {
+            portrait.visible = true;
+        });
+
+        this.back.visible = false;
+        this.back = this.stage0;
+        this.back.visible = true;
+
+
+        this.dancer.visible = false;
+        this.titleText.visible = true;
+        this.scoreText.visible = false;
+        this.versionText.visible = false;
+        this.chooseCharText.visible = true;
+        this.failText.visible = false;
+        this.winText.visible = false;
     
+    
+    },
     
     endGame: function() {
-        
         this.gameRunning = false
 
-        this.failText = this.game.add.text(this.world.centerX, this.world.centerY - 70, "GAME OVER");
-        this.failText.anchor.setTo(0.5);
-    
-        this.failText.font = 'Press Start 2P';
-        this.failText.fontSize = 50;
-    
-        this.grd = this.failText.context.createLinearGradient(0, 0, 0, this.failText.canvas.height);
-        this.grd.addColorStop(0, '#FFFFCC');   
-        this.grd.addColorStop(1, '#FFFF13');
-        this.failText.fill = this.grd;
-    
-        this.failText.align = 'center';
-        this.failText.stroke = '#000000';
-        this.failText.strokeThickness = 2;
-        this.failText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        this.failText.visible = true;
 
-    
-
-        this.failText.anchor.x = 0.5;
         this.dancer.animations.stop(null, true);
         this.dancer.frame = 7; //sad frame
         this.endSound.play();
         this.music.pause();
         this.moveCounter = 0;
+
+        this.time.events.add(3000, this.backToMenu, this);
     
     },
+
+    winGame: function() {
+        this.gameRunning = false;
+
+        this.winText.visible = true;
+
+       
+        this.dancer.animations.stop(null, true);
+        this.dancer.frame = 11; //happy frame
+        this.endSound.play();
+        this.music.pause();
+        this.moveCounter = 0;
+
+        this.time.events.add(5000, this.backToMenu, this);
+    
+    },
+
+
+
+
     
     runMissLogic: function() {
         this.failCounter += 1;
@@ -538,7 +598,7 @@ BasicGame.Game.prototype = {
         }
     
         if(this.currScore >= this.winScore) {
-            this.endGame();
+            this.winGame();
         }
     }
 
