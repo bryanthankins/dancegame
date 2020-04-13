@@ -56,6 +56,9 @@ BasicGame.Game.prototype = {
     this.successSound = this.game.add.audio('success');
     this.missSound = this.game.add.audio('miss');
     this.endSound = this.game.add.audio('end');
+    this.winSound = this.game.add.audio('win');
+    this.applauseSound = this.game.add.audio('applause');
+    this.booSound = this.game.add.audio('boo');
 
     // // Background
     this.stage0 = this.game.add.image(this.world.centerX, this.world.centerY, 'stage0');
@@ -446,7 +449,8 @@ BasicGame.Game.prototype = {
 
         this.dancer.animations.stop(null, true);
         this.dancer.frame = 11; //happy frame
-        this.endSound.play();
+        this.winSound.play();
+        this.applauseSound.play();
         this.music.pause();
         this.moveCounter = 0;
 
@@ -484,7 +488,7 @@ BasicGame.Game.prototype = {
 
 
 
-        this.time.events.add(5000, this.backToMenu, this);
+        this.time.events.add(8000, this.backToMenu, this);
 
     },
 
@@ -497,6 +501,7 @@ BasicGame.Game.prototype = {
         var missText = this.game.add.bitmapText(this.world.centerX, this.world.centerY, 'carrier_command', this.getNegativePhrase(), 24);
         missText.anchor.setTo(0.5);
         missText.smoothed = false;
+        this.booSound.play();
 
         this.game.add.tween(missText).to({ y: 0 }, 1500, Phaser.Easing.Linear.None, true);
         this.game.add.tween(missText).to({ alpha: 0 }, 1500, Phaser.Easing.Linear.None, true);
@@ -591,6 +596,7 @@ BasicGame.Game.prototype = {
             var bonusText = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY, 'carrier_command', this.getPostivePhrase(), 24);
             bonusText.anchor.setTo(0.5);
             bonusText.smoothed = false;
+            this.applauseSound.play();
     
             this.game.add.tween(bonusText).to({ y: 0 }, 1500, Phaser.Easing.Linear.None, true);
             this.game.add.tween(bonusText).to({ alpha: 0 }, 1500, Phaser.Easing.Linear.None, true);
