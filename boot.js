@@ -20,6 +20,9 @@ BasicGame.Boot.prototype = {
 
             document.body.style.backgroundColor = '#000000';
         }
+
+        // used for particle storm
+        this.game.forceSingleUpdate = true;
     
 
     },

@@ -170,7 +170,10 @@ BasicGame.Game.prototype = {
     this.winText.anchor.x = 0.5;
     this.winText.visible = false;
 
-   
+
+
+        
+
 
     // // Dancer
     this.dancers = this.game.add.group();
@@ -244,6 +247,7 @@ BasicGame.Game.prototype = {
     this.startBtn.events.onInputDown.add(this.startGame, this);
     this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
     this.add.tween(this.startBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
+    
 
     },
 
@@ -352,7 +356,8 @@ BasicGame.Game.prototype = {
             playerText = "Player: Bri";
             this.music = this.song1;
             this.successSpeedTime = 0.45;
-            this.winScore = 3500;
+            //this.winScore = 3500;
+            this.winScore = 35;
             this.back = this.stage1;
         }
         this.music.play();
@@ -386,6 +391,11 @@ BasicGame.Game.prototype = {
     
     },
     backToMenu: function() {
+        if(this.manager) {
+            this.emitter.renderer.display.visible = false
+            this.manager.destroy();
+        }
+
         this.arrows.forEach(function (arrow) {
             if (arrow.visible) {
                 arrow.visible = false;
@@ -407,6 +417,8 @@ BasicGame.Game.prototype = {
         this.chooseCharText.visible = true;
         this.failText.visible = false;
         this.winText.visible = false;
+        this.scoreText.text = "SCORE: 0";
+        this.currScore = 0;
     
     
     },
@@ -426,20 +438,54 @@ BasicGame.Game.prototype = {
     
     },
 
-    winGame: function() {
+    winGame: function () {
         this.gameRunning = false;
 
         this.winText.visible = true;
 
-       
+
         this.dancer.animations.stop(null, true);
         this.dancer.frame = 11; //happy frame
         this.endSound.play();
         this.music.pause();
         this.moveCounter = 0;
 
+        // Emitter
+        this.manager = this.game.plugins.add(Phaser.ParticleStorm);
+        var glowy = {
+            image: 'colorsHD',
+            frame: ['yellow', 'white'],
+            lifespan: { min: 600, max: 900 },
+            vx: { value: { min: 4, max: 12 }, delta: -0.1 },
+            vy: { value: { min: -15.0, max: -10 }, delta: 0.5 },
+            scale: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
+            alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 0.5, y: 1 }, { x: 1, y: 0 }] },
+            emit: {
+                name: 'glowyChild',
+                value: 1,
+                control: [{ x: 0, y: 0 }, { x: 0.2, y: 0 }, { x: 1, y: 1 }]
+            }
+        };
+        var glowyChild = {
+            image: 'colorsHD',
+            frame: ['red', 'green', 'blue'],
+            blendMode: 'HARD_LIGHT',
+            lifespan: 1000,
+            vx: { min: -4, max: 4 },
+            vy: { value: { min: -10, max: -6 }, delta: 0.5 },
+            scale: { value: { min: 0.5, max: 1 }, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
+            alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0 }] }
+        };
+        this.manager.addData('glowy', glowy);
+        this.manager.addData('glowyChild', glowyChild);
+        this.emitter = this.manager.createEmitter();
+        this.emitter.addToWorld();
+        this.emitter.emit('glowy', this.world.centerX - 200, this.world.centerY, { repeat: -1, frequency: 500 });
+
+
+
         this.time.events.add(5000, this.backToMenu, this);
-    
+
     },
 
 

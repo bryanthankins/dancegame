@@ -49,7 +49,12 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('portrait2', 'assets/sprites/biopic2.png');
         this.game.load.image('portrait3', 'assets/sprites/biopic3.png');
         this.game.load.image('startBtn', 'assets/sprites/start.png');
-    
+
+        // emitter
+        //this.game.load.path = 'assets/particles/';
+        //this.game.load.atlas('assets/particles/colorsHD');
+        this.game.load.atlas('colorsHD', 'assets/sprites/colorsHD.png', 'assets/sprites/colorsHD.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+       
     
         this.game.load.image('arrow', 'assets/sprites/arrow.png');
         this.game.load.image('slidearrow', 'assets/sprites/slidearrow.png');
