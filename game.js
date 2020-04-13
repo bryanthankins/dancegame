@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.2";
+    this.version = "7.3";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
