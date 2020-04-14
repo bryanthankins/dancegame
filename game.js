@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.5";
+    this.version = "7.6";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -511,6 +511,7 @@ BasicGame.Game.prototype = {
         missText.anchor.setTo(0.5);
         missText.smoothed = false;
         this.booSound.play();
+        this.spotlight.visible = false;
 
         this.game.add.tween(missText).to({ y: 0 }, 1500, Phaser.Easing.Linear.None, true);
         this.game.add.tween(missText).to({ alpha: 0 }, 1500, Phaser.Easing.Linear.None, true);
@@ -621,9 +622,7 @@ BasicGame.Game.prototype = {
                 this.spotlight.visible = true;
 
     
-            } else {
-                this.spotlight.visible = false;
-            } 
+            }
             
         }
         else {
