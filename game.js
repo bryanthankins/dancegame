@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.4";
+    this.version = "7.5";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -251,6 +251,13 @@ BasicGame.Game.prototype = {
     this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
     this.add.tween(this.startBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
     
+    // Spotlight
+    this.spotlight = this.game.add.sprite(this.world.centerX, this.world.centerY, 'spotlight');
+    this.spotlight.anchor.setTo(0.5);
+    this.spotlight.alpha = 0.7;
+    this.spotlight.smoothed = false;
+    this.spotlight.visible = false;
+
 
     },
 
@@ -610,8 +617,14 @@ BasicGame.Game.prototype = {
                 this.explosionAnimation.visible = true;
                 this.explosionAnimation.reset(arrow.x, arrow.y);
                 this.explosionAnimation.play('kaboom', 30, false, true);
+
+                this.spotlight.visible = true;
+
     
+            } else {
+                this.spotlight.visible = false;
             } 
+            
         }
         else {
             this.fastClickCount  = 0;                

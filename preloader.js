@@ -32,6 +32,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('stage1', 'assets/pics/discopixel.png');
         this.game.load.image('stage2', 'assets/pics/latin.png');
         this.game.load.image('stage3', 'assets/pics/space.png');
+        
         this.game.load.audio('song1', ['assets/audio/frenchydafty.mp3']);
         this.game.load.audio('song2', ['assets/audio/latinflavour.mp3']);
         this.game.load.audio('song3', ['assets/audio/space.mp3']);
@@ -52,6 +53,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('portrait2', 'assets/sprites/biopic2.png');
         this.game.load.image('portrait3', 'assets/sprites/biopic3.png');
         this.game.load.image('startBtn', 'assets/sprites/start.png');
+        this.game.load.image('spotlight', 'assets/sprites/spotlight_02.png');
 
         // emitter
         //this.game.load.path = 'assets/particles/';
