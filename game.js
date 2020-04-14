@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.3";
+    this.version = "7.4";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -359,8 +359,7 @@ BasicGame.Game.prototype = {
             playerText = "Player: Bri";
             this.music = this.song1;
             this.successSpeedTime = 0.45;
-            //this.winScore = 3500;
-            this.winScore = 35;
+            this.winScore = 3500;
             this.back = this.stage1;
         }
         this.music.play();
@@ -437,7 +436,8 @@ BasicGame.Game.prototype = {
         this.music.pause();
         this.moveCounter = 0;
 
-        this.time.events.add(3000, this.backToMenu, this);
+        this.game.input.onDown.addOnce(this.backToMenu, this);
+        //this.time.events.add(3000, this.backToMenu, this);
     
     },
 
@@ -488,7 +488,9 @@ BasicGame.Game.prototype = {
 
 
 
-        this.time.events.add(8000, this.backToMenu, this);
+        
+        this.game.input.onDown.addOnce(this.backToMenu, this);
+        //this.time.events.add(8000, this.backToMenu, this);
 
     },
 
@@ -596,7 +598,7 @@ BasicGame.Game.prototype = {
             var bonusText = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY, 'carrier_command', this.getPostivePhrase(), 24);
             bonusText.anchor.setTo(0.5);
             bonusText.smoothed = false;
-            this.applauseSound.play();
+            
     
             this.game.add.tween(bonusText).to({ y: 0 }, 1500, Phaser.Easing.Linear.None, true);
             this.game.add.tween(bonusText).to({ alpha: 0 }, 1500, Phaser.Easing.Linear.None, true);
@@ -604,6 +606,7 @@ BasicGame.Game.prototype = {
             this.currScore += 50;
             this.fastClickCount += 1;
             if (this.fastClickCount >= 3) {
+                this.applauseSound.play();
                 this.explosionAnimation.visible = true;
                 this.explosionAnimation.reset(arrow.x, arrow.y);
                 this.explosionAnimation.play('kaboom', 30, false, true);

@@ -17,7 +17,6 @@ BasicGame.Boot.prototype = {
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
 
-
             document.body.style.backgroundColor = '#000000';
         }
 
