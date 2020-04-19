@@ -37,7 +37,7 @@ BasicGame.Game.prototype = {
     this.currScore = 0;
 
     // Configs
-    this.version = "7.6";
+    this.version = "7.7";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
     this.level = 1;
@@ -83,7 +83,7 @@ BasicGame.Game.prototype = {
 
     this.back = this.stage0;
 
-    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 50, 'carrier_command', 'Choose Character to Start', 15);
+    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 25, 'carrier_command', 'Choose Character to Start', 15);
     this.chooseCharText.smoothed = false;
     this.chooseCharText.anchor.setTo(0.5);
 
@@ -107,19 +107,23 @@ BasicGame.Game.prototype = {
     this.versionText.smoothed = false;
     this.versionText.visible = false;
 
-    this.levelText = this.game.add.bitmapText(this.world.centerX - 175, this.world.centerY + 285, 'carrier_command', 'Level: ', 20);
-    this.levelText.anchor.setTo(0.5);
-    this.levelText.smoothed = false;
-    this.levelText.visible = false;
-
-    this.charText = this.game.add.bitmapText(this.world.centerX + 175, this.world.centerY + 285, 'carrier_command', 'Player: ', 20);
+    this.levelText = this.game.add.group();
+    this.level1Text = this.game.add.bitmapText(this.world.centerX - 245, this.world.centerY - 275, 'carrier_command', 'Easy', 18, this.levelText);
+    this.level2Text = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 275, 'carrier_command', 'Med', 18, this.levelText);
+    this.level3Text = this.game.add.bitmapText(this.world.centerX + 245, this.world.centerY - 275, 'carrier_command', 'Hard', 18, this.levelText);
+    this.levelText.forEach(function (text) {
+        text.anchor.setTo(0.5);
+        text.smoothed = false;
+    });
+    
+    this.charText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 275, 'carrier_command', 'Player: ', 20);
     this.charText.anchor.setTo(0.5);
     this.charText.smoothed = false;
     this.charText.visible = false;
 
 
     // Title text
-    this.titleText = this.game.add.text(this.world.centerX, this.world.centerY - 125, "SOCIAL DISTANCE \nDANCING");
+    this.titleText = this.game.add.text(this.world.centerX, this.world.centerY - 100, "SOCIAL DISTANCE \nDANCING");
     this.titleText.anchor.setTo(0.5);
 
     this.titleText.font = 'Press Start 2P';
@@ -230,9 +234,9 @@ BasicGame.Game.prototype = {
 
     // Portraits
     this.portraits = this.game.add.group();
-    this.portraits.create(this.world.centerX - 245, this.world.centerY - 250, 'portrait1').events.onInputDown.add(this.portraitClick, this);
-    this.portraits.create(this.world.centerX, this.world.centerY - 250, 'portrait2').events.onInputDown.add(this.portraitClick, this);
-    this.portraits.create(this.world.centerX + 245, this.world.centerY - 250, 'portrait3').events.onInputDown.add(this.portraitClick, this);
+    this.portraits.create(this.world.centerX - 245, this.world.centerY - 225, 'portrait1').events.onInputDown.add(this.portraitClick, this);
+    this.portraits.create(this.world.centerX, this.world.centerY - 225, 'portrait2').events.onInputDown.add(this.portraitClick, this);
+    this.portraits.create(this.world.centerX + 245, this.world.centerY - 225, 'portrait3').events.onInputDown.add(this.portraitClick, this);
     this.portraits.forEach(function (portrait) {
         portrait.anchor.setTo(0.5);
         portrait.smoothed = false;
@@ -241,14 +245,14 @@ BasicGame.Game.prototype = {
     });
 
     // Start Button
-    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY, 'startBtn');
+    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY + 15, 'startBtn');
     this.startBtn.anchor.setTo(0.5);
     this.startBtn.scale.set(2);
     this.startBtn.smoothed = false;
     this.startBtn.inputEnabled = true;
     this.startBtn.visible = false;
     this.startBtn.events.onInputDown.add(this.startGame, this);
-    this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
+    //this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
     this.add.tween(this.startBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
     
     // Spotlight
@@ -347,7 +351,7 @@ BasicGame.Game.prototype = {
         if(portrait.key == 'portrait3') {
             this.level = 3;
             difficultyText  = "Level: Hard";
-            playerText = "Player: Jaana";
+            playerText = "Jaana";
             this.music = this.song3;
             this.back  = this.stage3;
             this.winScore = 10000;
@@ -355,7 +359,7 @@ BasicGame.Game.prototype = {
         }else if(portrait.key == 'portrait2') {
             this.level = 2;
             difficultyText  = "Level: Med";
-            playerText = "Player: Caleb";
+            playerText = "Caleb";
             this.music = this.song2;
             this.back  = this.stage2;
             this.winScore = 6000;
@@ -363,7 +367,7 @@ BasicGame.Game.prototype = {
         } else {
             this.level = 1;
             difficultyText  = "Level: Easy";
-            playerText = "Player: Bri";
+            playerText = "Bri";
             this.music = this.song1;
             this.successSpeedTime = 0.45;
             this.winScore = 3500;
@@ -376,8 +380,6 @@ BasicGame.Game.prototype = {
         this.dancer.visible = true;
         this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
         this.startBtn.visible = true;
-        this.levelText.text = difficultyText;
-        this.levelText.visible = true;
         this.charText.text = playerText;
         this.charText.visible = true;
     },
@@ -418,6 +420,7 @@ BasicGame.Game.prototype = {
         this.back = this.stage0;
         this.back.visible = true;
 
+        this.spotlight.visible = false;
 
         this.dancer.visible = false;
         this.titleText.visible = true;
