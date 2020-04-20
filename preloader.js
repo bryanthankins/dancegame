@@ -45,7 +45,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.audio('boo', ['assets/audio/boo.wav']);
         this.game.load.audio('applause', ['assets/audio/applause.wav']);
     
-        this.game.load.spritesheet('dancer1', 'assets/sprites/dancer1.png', 64, 64);
+        this.game.load.spritesheet('dancer1', 'assets/sprites/dancer1Bri.png', 64, 64);
         this.game.load.spritesheet('dancer2', 'assets/sprites/dancer2.png', 64, 64);
         this.game.load.spritesheet('dancer3', 'assets/sprites/dancer3.png', 64, 64);
     

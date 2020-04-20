@@ -189,7 +189,7 @@ BasicGame.Game.prototype = {
     this.dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer3', 5);
     this.dancers.forEach(function (dancer) {
         dancer.anchor.setTo(0.5);
-        dancer.scale.set(3);
+        dancer.scale.set(3.5);
         dancer.smoothed = false;
         dancer.visible = false;
         dancer.animations.add('dance1', [0, 1, 2, 3, 4, 5, 6, 7]);
