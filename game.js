@@ -116,7 +116,7 @@ BasicGame.Game.prototype = {
         text.smoothed = false;
     });
     
-    this.charText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 275, 'carrier_command', 'Player: ', 20);
+    this.charText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 45, 'carrier_command', '', 20);
     this.charText.anchor.setTo(0.5);
     this.charText.smoothed = false;
     this.charText.visible = false;
@@ -245,7 +245,7 @@ BasicGame.Game.prototype = {
     });
 
     // Start Button
-    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY + 15, 'startBtn');
+    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY - 15, 'startBtn');
     this.startBtn.anchor.setTo(0.5);
     this.startBtn.scale.set(2);
     this.startBtn.smoothed = false;
