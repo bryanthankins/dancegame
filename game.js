@@ -193,8 +193,8 @@ BasicGame.Game.prototype = {
     this.dancer1.animations.add('dance6', [35,36,37,38,39,40,41,42]);
     this.dancer1.animations.add('dance7', [43,44,45,46,47,48,49,50]);
     this.dancer1.animations.add('dance8', [51,52,53,54,55,56]);
-    this.dancer1.animations.add('dance9', [57,58,59,60,61,62,63,64]);
-    this.dancer1.animations.add('dance10', [65,66,67,68,69,70]);
+    this.dancer1.animations.add('dance9', [57,58,59,60,61,62,63]);
+    this.dancer1.animations.add('dance10', [64,65,66,67,68,69,70]);
     this.dancers.add(this.dancer1);
 
     this.dancer2 = this.game.add.sprite(this.world.centerX, this.world.centerY + 145, 'dancer2');
