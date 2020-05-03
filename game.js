@@ -83,7 +83,7 @@ BasicGame.Game.prototype = {
 
     this.back = this.stage0;
 
-    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 25, 'carrier_command', 'Choose Character to Start', 15);
+    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 75, 'carrier_command', 'Choose Character to Start', 15);
     this.chooseCharText.smoothed = false;
     this.chooseCharText.anchor.setTo(0.5);
 
@@ -116,14 +116,14 @@ BasicGame.Game.prototype = {
         text.smoothed = false;
     });
     
-    this.charText = this.game.add.bitmapText(this.world.centerX, this.world.centerY + 45, 'carrier_command', '', 20);
+    this.charText = this.game.add.bitmapText(this.world.centerX, this.world.centerY, 'carrier_command', '', 20);
     this.charText.anchor.setTo(0.5);
     this.charText.smoothed = false;
     this.charText.visible = false;
 
 
     // Title text
-    this.titleText = this.game.add.text(this.world.centerX, this.world.centerY - 100, "SOCIAL DISTANCE \nDANCING");
+    this.titleText = this.game.add.text(this.world.centerX, this.world.centerY - 135, "SOCIAL DISTANCE \nDANCING");
     this.titleText.anchor.setTo(0.5);
 
     this.titleText.font = 'Press Start 2P';
@@ -182,20 +182,51 @@ BasicGame.Game.prototype = {
         
 
 
-    // // Dancer
+    // Dancer
     this.dancers = this.game.add.group();
-    this.dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer1', 5);
-    this.dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer2', 5);
-    this.dancers.create(this.world.centerX, this.world.centerY + 175, 'dancer3', 5);
+    this.dancer1 = this.game.add.sprite(this.world.centerX, this.world.centerY + 145, 'dancer1');
+    this.dancer1.animations.add('dance1', [0, 1, 2, 3, 4, 5]);
+    this.dancer1.animations.add('dance2', [6,7,8,9,10,11,12,13]);
+    this.dancer1.animations.add('dance3', [14,15,16,17,18,19]);
+    this.dancer1.animations.add('dance4', [20,21,22,23,24,25,26,27]);
+    this.dancer1.animations.add('dance5', [28,29,30,31,32,33,34]);
+    this.dancer1.animations.add('dance6', [35,36,37,38,39,40,41,42]);
+    this.dancer1.animations.add('dance7', [43,44,45,46,47,48,49,50]);
+    this.dancer1.animations.add('dance8', [51,52,53,54,55,56]);
+    this.dancer1.animations.add('dance9', [57,58,59,60,61,62,63,64]);
+    this.dancer1.animations.add('dance10', [65,66,67,68,69,70]);
+    this.dancers.add(this.dancer1);
+
+    this.dancer2 = this.game.add.sprite(this.world.centerX, this.world.centerY + 145, 'dancer2');
+    this.dancer2.animations.add('dance1', [0, 1, 2, 3, 4, 5]);
+    this.dancer2.animations.add('dance2', [6,7,8,9,10,11,12,13]);
+    this.dancer2.animations.add('dance3', [14,15,16,17,18,19]);
+    this.dancer2.animations.add('dance4', [20,21,22,23,24,25,26,27]);
+    this.dancer2.animations.add('dance5', [28,29,30,31,32,33,34]);
+    this.dancer2.animations.add('dance6', [35,36,37,38,39,40,41,42]);
+    this.dancer2.animations.add('dance7', [43,44,45,46,47,48,49,50]);
+    this.dancer2.animations.add('dance8', [51,52,53,54,55,56]);
+    this.dancer2.animations.add('dance9', [57,58,59,60,61,62,63,63]);
+    this.dancer2.animations.add('dance10', [64,66,67,68]);
+    this.dancers.add(this.dancer2);
+
+    this.dancer3 = this.game.add.sprite(this.world.centerX, this.world.centerY + 145, 'dancer3');
+    this.dancer3.animations.add('dance1', [0, 1, 2, 3, 4, 5]);
+    this.dancer3.animations.add('dance2', [6,7,8,9,10,11,12,13]);
+    this.dancer3.animations.add('dance3', [14,15,16,17,18,19]);
+    this.dancer3.animations.add('dance4', [20,21,22,23,24,25,26,27]);
+    this.dancer3.animations.add('dance5', [28,29,30,31,32,33,34]);
+    this.dancer3.animations.add('dance6', [35,36,37,38,39,40,41,42]);
+    this.dancer3.animations.add('dance7', [43,44,45,46,47,48,49,50]);
+    this.dancer3.animations.add('dance8', [51,52,53,54,55,56]);
+    this.dancer3.animations.add('dance9', [57,58,59,60,61,62,63,64]);
+    this.dancer3.animations.add('dance10', [65,66,67,68,69,70]);
+    this.dancers.add(this.dancer3);
     this.dancers.forEach(function (dancer) {
         dancer.anchor.setTo(0.5);
-        dancer.scale.set(3.5);
+        dancer.scale.set(3);
         dancer.smoothed = false;
-        dancer.visible = false;
-        dancer.animations.add('dance1', [0, 1, 2, 3, 4, 5, 6, 7]);
-        dancer.animations.add('dance2', [8, 9, 10, 11, 12, 13, 14, 15, 16]);
-        dancer.animations.add('dance3', [17, 18, 19, 20, 21, 22, 23, 24, 25]);
-        dancer.animations.add('dance4', [26, 27, 28, 29, 30, 31, 32, 33, 34]);
+        dancer.visible = false;     
         dancer.frame = 0; //happy frame
     });
 
@@ -213,7 +244,7 @@ BasicGame.Game.prototype = {
     this.arrows.getAt(0).events.onInputDown.add(this.arrowClick,this);
     this.arrows.create(this.world.centerX + 115, this.world.centerY + 150, 'arrow').angle = 0;
     this.arrows.getAt(1).events.onInputDown.add(this.arrowClick,this);
-    this.arrows.create(this.world.centerX, this.world.centerY + 35, 'arrow').angle = -90;
+    this.arrows.create(this.world.centerX, this.world.centerY - 50, 'arrow').angle = -90;
     this.arrows.getAt(2).events.onInputDown.add(this.arrowClick,this);
     this.arrows.create(this.world.centerX - 205, this.world.centerY + 150, 'slidearrow').angle = 180;
     this.arrows.getAt(3).events.onInputDown.add(this.arrowClick,this);
@@ -245,7 +276,7 @@ BasicGame.Game.prototype = {
     });
 
     // Start Button
-    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY - 15, 'startBtn');
+    this.startBtn = this.game.add.sprite(this.world.centerX, this.world.centerY - 55, 'startBtn');
     this.startBtn.anchor.setTo(0.5);
     this.startBtn.scale.set(2);
     this.startBtn.smoothed = false;
@@ -359,7 +390,7 @@ BasicGame.Game.prototype = {
         }else if(portrait.key == 'portrait2') {
             this.level = 2;
             difficultyText  = "Level: Med";
-            playerText = "Caleb";
+            playerText = "Brianna";
             this.music = this.song2;
             this.back  = this.stage2;
             this.winScore = 6000;
@@ -367,7 +398,7 @@ BasicGame.Game.prototype = {
         } else {
             this.level = 1;
             difficultyText  = "Level: Easy";
-            playerText = "Bri";
+            playerText = "Seiko";
             this.music = this.song1;
             this.successSpeedTime = 0.45;
             this.winScore = 3500;
@@ -378,7 +409,8 @@ BasicGame.Game.prototype = {
         
         this.dancer = this.dancers.getAt(this.level - 1);
         this.dancer.visible = true;
-        this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
+        //this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
+        this.dancer.animations.play('dance1', 10, true);
         this.startBtn.visible = true;
         this.charText.text = playerText;
         this.charText.visible = true;
@@ -431,6 +463,12 @@ BasicGame.Game.prototype = {
         this.winText.visible = false;
         this.scoreText.text = "SCORE: 0";
         this.currScore = 0;
+        //Reset to default configs
+        this.simultaneousArrows = 1;
+        this.arrowInterval = 1.3;
+        this.level = 1;
+        this.successSpeedTime = 0.37;
+        this.arrowPoints = 25;
     
     
     },
@@ -440,8 +478,9 @@ BasicGame.Game.prototype = {
 
         this.failText.visible = true;
 
-        this.dancer.animations.stop(null, true);
-        this.dancer.frame = 7; //sad frame
+        //this.dancer.animations.stop(null, true);
+        //this.dancer.frame = 7; //sad frame
+        this.dancer.animations.play('dance10', 10, false);
         this.endSound.play();
         this.music.pause();
         this.moveCounter = 0;
@@ -642,29 +681,29 @@ BasicGame.Game.prototype = {
     
     
         arrow.visible = false;
-        this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
+        this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 9), 10, true);
         if (arrow.key == 'slidearrow') {
             var slideOffset = 0;
             var rotateOffset = 0;
             if (arrow.angle == 0) {
                 slideOffset = 200;
-                rotateOffset = 15
+                //rotateOffset = 15
             }
             else {
                 slideOffset = -200;
-                rotateOffset = -15
+                //rotateOffset = -15
             }
             this.game.add.tween(this.dancer).to({ x: this.game.world.centerX + slideOffset }, 500).to({ x: this.game.world.centerX }, 500).start();
             this.game.add.tween(this.dancer).to({ angle: rotateOffset }, 500).to({ angle: 2 }, 500).to({ angle: 0 }, 500).start();
         }
         else if(arrow.key == 'diagonalarrow'){
             if(arrow.angle == -45){
-                this.game.add.tween(this.dancer).to({ angle: 360 }, 500).start();
+                this.game.add.tween(this.dancer).to({ angle: 360 }, 250).start();
             } else {
-                this.game.add.tween(this.dancer).to({ angle: -360 }, 500).start();
+                this.game.add.tween(this.dancer).to({ angle: -360 }, 250).start();
             }
         } else if (arrow.angle == -90) {
-            this.game.add.tween(this.dancer).to({ y: this.game.world.centerY + 105 }, 200).to({ y: this.game.world.centerY + 175 }, 200).start();
+            this.game.add.tween(this.dancer).to({ y: this.game.world.centerY + 65 }, 150).to({ y: this.game.world.centerY + 145 }, 150).start();
         }
     
         if(this.currScore >= this.winScore) {

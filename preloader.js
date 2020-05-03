@@ -29,8 +29,8 @@ BasicGame.Preloader.prototype = {
 		//	Here we load the rest of the assets our game needs.
 		//	As this is just a Project Template I've not provided these assets, swap them for your own.
         this.game.load.image('stage0', 'assets/pics/stage.png');
-        this.game.load.image('stage1', 'assets/pics/discopixel.png');
-        this.game.load.image('stage2', 'assets/pics/latin.png');
+        this.game.load.image('stage1', 'assets/pics/latin.png');
+        this.game.load.image('stage2', 'assets/pics/discopixel.png');
         this.game.load.image('stage3', 'assets/pics/space.png');
         
         this.game.load.audio('song1', ['assets/audio/frenchydafty.mp3']);
@@ -45,9 +45,10 @@ BasicGame.Preloader.prototype = {
         this.game.load.audio('boo', ['assets/audio/boo.wav']);
         this.game.load.audio('applause', ['assets/audio/applause.wav']);
     
-        this.game.load.spritesheet('dancer1', 'assets/sprites/dancer3Bri.png', 64, 64);
-        this.game.load.spritesheet('dancer2', 'assets/sprites/dancer3caleb.png', 64, 64);
-        this.game.load.spritesheet('dancer3', 'assets/sprites/dancer3jaana.png', 64, 64);
+        //this.game.load.spritesheet('dancer1', 'assets/sprites/dancer3Bri.png', 64, 64);
+        this.game.load.spritesheet('dancer1', 'assets/sprites/dancer1.png', 128, 128);
+        this.game.load.spritesheet('dancer2', 'assets/sprites/dancer2.png', 128, 128);
+        this.game.load.spritesheet('dancer3', 'assets/sprites/dancer3.png', 128, 128);
     
         this.game.load.image('portrait1', 'assets/sprites/biopic1.png');
         this.game.load.image('portrait2', 'assets/sprites/biopic2.png');
