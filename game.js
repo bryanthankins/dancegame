@@ -87,7 +87,8 @@ BasicGame.Game.prototype = {
     this.chooseCharText.smoothed = false;
     this.chooseCharText.anchor.setTo(0.5);
 
-    this.scoreText = this.game.add.text(this.world.centerX + 175, this.world.centerY - 275, "SCORE: 0");
+    //this.scoreText = this.game.add.text(this.world.centerX + 175, this.world.centerY - 275, "SCORE: 0");
+    this.scoreText = this.game.add.text(this.world.centerX, this.world.centerY - 275, "SCORE: 0");
     this.scoreText.anchor.setTo(0.5, 0.5);
     this.scoreText.font = 'Press Start 2P';
     this.scoreText.fontSize = 25;
@@ -425,7 +426,7 @@ BasicGame.Game.prototype = {
         this.titleText.visible = false;
         this.startBtn.visible = false;
         this.scoreText.visible = true;
-        this.versionText.visible = true;
+        // this.versionText.visible = true;
         this.levelText.visible = false;
         this.charText.visible = false;
         this.startSound.play();
@@ -483,6 +484,7 @@ BasicGame.Game.prototype = {
         this.endSound.play();
         this.music.pause();
         this.moveCounter = 0;
+
 
         this.game.input.onDown.addOnce(this.backToMenu, this);
         //this.time.events.add(3000, this.backToMenu, this);
