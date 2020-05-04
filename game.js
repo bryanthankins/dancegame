@@ -49,9 +49,9 @@ BasicGame.Game.prototype = {
     this.gameTimer = this.game.time.time;
    
     // Add music
-    this.song1 = this.game.add.audio('song1', 0.5, true);
-    this.song2 = this.game.add.audio('song2', 0.5, true);
-    this.song3 = this.game.add.audio('song3', 0.5, true);
+    this.song1 = this.game.add.audio('song1', 1, true);
+    this.song2 = this.game.add.audio('song2', 1, true);
+    this.song3 = this.game.add.audio('song3', 1, true);
     this.startSound = this.game.add.audio('start');
     this.successSound = this.game.add.audio('success');
     this.missSound = this.game.add.audio('miss');
@@ -404,12 +404,11 @@ BasicGame.Game.prototype = {
             this.winScore = 3500;
             this.back = this.stage1;
         }
-        this.music.play();
+        this.music.play('', 0, 1, true);
         this.back.visible = true;
         
         this.dancer = this.dancers.getAt(this.level - 1);
         this.dancer.visible = true;
-        //this.dancer.animations.play('dance' + this.game.rnd.integerInRange(1, 4), 10, true);
         this.dancer.animations.play('dance1', 10, true);
         this.startBtn.visible = true;
         this.charText.text = playerText;
@@ -418,7 +417,7 @@ BasicGame.Game.prototype = {
       
     
     startGame: function () {
-        this.music.restart();
+        this.music.restart('', 0, 1, true);
         this.portraits.forEach(function (portrait) {
             portrait.visible = false;
         });
