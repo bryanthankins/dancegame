@@ -33,6 +33,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('stage2', 'assets/pics/discopixel.png');
         this.game.load.image('stage3', 'assets/pics/space.png');
         
+        // changed song order
         this.game.load.audio('song1', ['assets/audio/latinflavour.mp3']);
         this.game.load.audio('song2', ['assets/audio/frenchydafty.mp3']);
         this.game.load.audio('song3', ['assets/audio/space.mp3']);
@@ -45,7 +46,6 @@ BasicGame.Preloader.prototype = {
         this.game.load.audio('boo', ['assets/audio/boo.wav']);
         this.game.load.audio('applause', ['assets/audio/applause.wav']);
     
-        //this.game.load.spritesheet('dancer1', 'assets/sprites/dancer3Bri.png', 64, 64);
         this.game.load.spritesheet('dancer1', 'assets/sprites/dancer1.png', 128, 128);
         this.game.load.spritesheet('dancer2', 'assets/sprites/dancer2.png', 128, 128);
         this.game.load.spritesheet('dancer3', 'assets/sprites/dancer3.png', 128, 128);
