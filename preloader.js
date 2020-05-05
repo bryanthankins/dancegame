@@ -33,8 +33,8 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('stage2', 'assets/pics/discopixel.png');
         this.game.load.image('stage3', 'assets/pics/space.png');
         
-        this.game.load.audio('song1', ['assets/audio/frenchydafty.mp3']);
-        this.game.load.audio('song2', ['assets/audio/latinflavour.mp3']);
+        this.game.load.audio('song1', ['assets/audio/latinflavour.mp3']);
+        this.game.load.audio('song2', ['assets/audio/frenchydafty.mp3']);
         this.game.load.audio('song3', ['assets/audio/space.mp3']);
     
         this.game.load.audio('start', ['assets/audio/button_start.wav']);
