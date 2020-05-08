@@ -35,8 +35,10 @@ BasicGame.Game.prototype = {
     this.gameRunning = false;
     this.moveCounter = 0;
     this.currScore = 0;
+    this.angle = 0;
 
     // Configs
+    this.allowExplosions = false;
     this.version = "7.7";
     this.simultaneousArrows = 1;
     this.arrowInterval = 1.3;
@@ -80,6 +82,12 @@ BasicGame.Game.prototype = {
     this.stage3.visible = false;
     this.stage3.anchor.setTo(0.5);
     this.stage3.smoothed = false;
+
+    this.tiger = this.game.add.image(this.world.centerX, this.world.centerY, 'tiger');
+    this.tiger.visible = false;
+    this.tiger.anchor.setTo(0.5);
+    this.tiger.smoothed = false;
+    this.tiger.alpha = 0.4;
 
     this.back = this.stage0;
 
@@ -297,6 +305,8 @@ BasicGame.Game.prototype = {
 
     },
 
+
+
     update: function () {
         
         if (this.game.time.elapsedSecondsSince(this.gameTimer) > this.arrowInterval && this.gameRunning) {
@@ -352,6 +362,23 @@ BasicGame.Game.prototype = {
                 }
                 
             }
+
+
+            // more interesting ramp up
+            if (this.currScore > 250 && this.currScore < 750) {
+                this.spotlight.visible = true;
+            }
+            // } else if (this.currScore > 750 && this.currScore < 1250) {
+            //     this.allowExplosions = true;
+            // } else if (this.currScore > 1250 && this.currScore < 4000) {
+            //     // this.allowExplosions = false;
+            //     // //this.back.visible = false;
+            //     // this.tiger.visible = true;
+            //     // this.back = this.tiger;
+
+            // } else if (this.currScore > 4000) {
+               
+            // }
             
         }
 
@@ -464,6 +491,7 @@ BasicGame.Game.prototype = {
         this.scoreText.text = "SCORE: 0";
         this.currScore = 0;
         //Reset to default configs
+        this.allowExplosions = false;
         this.simultaneousArrows = 1;
         this.arrowInterval = 1.3;
         this.level = 1;
@@ -662,7 +690,7 @@ BasicGame.Game.prototype = {
                 this.explosionAnimation.reset(arrow.x, arrow.y);
                 this.explosionAnimation.play('kaboom', 30, false, true);
 
-                this.spotlight.visible = true;
+  //              this.spotlight.visible = true;
 
     
             }
@@ -671,6 +699,12 @@ BasicGame.Game.prototype = {
         else {
             this.fastClickCount  = 0;                
         }
+
+        // if(this.allowExplosions) {
+        //     this.explosionAnimation.visible = true;
+        //     this.explosionAnimation.reset(arrow.x, arrow.y);
+        //     this.explosionAnimation.play('kaboom', 30, false, true);
+        // }
     
         this.successSound.play();
     

@@ -32,6 +32,8 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('stage1', 'assets/pics/latin.png');
         this.game.load.image('stage2', 'assets/pics/discopixel.png');
         this.game.load.image('stage3', 'assets/pics/space.png');
+        this.game.load.image('tiger', 'assets/pics/tiger.png');
+
         
         // changed song order
         this.game.load.audio('song1', ['assets/audio/latinflavour.mp3']);
@@ -57,9 +59,8 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('spotlight', 'assets/sprites/spotlight_02.png');
 
         // emitter
-        //this.game.load.path = 'assets/particles/';
-        //this.game.load.atlas('assets/particles/colorsHD');
         this.game.load.atlas('colorsHD', 'assets/sprites/colorsHD.png', 'assets/sprites/colorsHD.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+
        
     
         this.game.load.image('arrow', 'assets/sprites/arrow.png');
