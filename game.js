@@ -108,7 +108,7 @@ BasicGame.Game.prototype = {
     this.scoreText.align = 'center';
     this.scoreText.stroke = '#000000';
     this.scoreText.strokeThickness = 2;
-    this.scoreText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+   // this.scoreText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 
 
     this.versionText = this.game.add.bitmapText(this.world.centerX - 175, this.world.centerY - 275, 'carrier_command', 'Version: ' + this.version, 24);
@@ -146,7 +146,7 @@ BasicGame.Game.prototype = {
     this.titleText.align = 'center';
     this.titleText.stroke = '#000000';
     this.titleText.strokeThickness = 2;
-    this.titleText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    //this.titleText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 
     // Fail Text
     this.failText = this.game.add.text(this.world.centerX, this.world.centerY - 70, "GAME OVER");
@@ -163,7 +163,7 @@ BasicGame.Game.prototype = {
     this.failText.align = 'center';
     this.failText.stroke = '#000000';
     this.failText.strokeThickness = 2;
-    this.failText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    //this.failText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
     this.failText.anchor.x = 0.5;
     this.failText.visible = false;
 
@@ -182,7 +182,7 @@ BasicGame.Game.prototype = {
     this.winText.align = 'center';
     this.winText.stroke = '#000000';
     this.winText.strokeThickness = 2;
-    this.winText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    //this.winText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
     this.winText.anchor.x = 0.5;
     this.winText.visible = false;
 

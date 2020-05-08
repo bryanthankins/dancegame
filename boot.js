@@ -10,6 +10,7 @@ BasicGame.Boot.prototype = {
 
         this.input.maxPointers = 3;
         this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
         this.stage.backgroundColor = 0x000000;
         if (!this.game.device.desktop) {
 
@@ -21,7 +22,7 @@ BasicGame.Boot.prototype = {
         }
 
         // used for particle storm
-        this.game.forceSingleUpdate = true;
+        //this.game.forceSingleUpdate = true;
     
 
     },
