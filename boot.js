@@ -22,7 +22,7 @@ BasicGame.Boot.prototype = {
         }
 
         // used for particle storm
-        //this.game.forceSingleUpdate = true;
+        this.game.forceSingleUpdate = true;
     
 
     },
