@@ -497,7 +497,7 @@ BasicGame.Game.prototype = {
         this.back.visible = true;
 
         this.spotlight.visible = false;
-
+        this.dancer.animations.stop(null, true);
         this.dancer.visible = false;
         this.titleText.visible = true;
         this.scoreText.visible = false;
@@ -545,48 +545,52 @@ BasicGame.Game.prototype = {
 
 
         this.dancer.animations.stop(null, true);
-        this.dancer.frame = 11; //happy frame
+        //this.dancer.frame = 11; //happy frame
+        this.dancer.animations.play('dance3', 10, true);
+
+
         this.winSound.play();
         this.applauseSound.play();
         this.music.pause();
         this.moveCounter = 0;
+        this.restartBtn.visible = true;
 
         // Emitter
-        this.manager = this.game.plugins.add(Phaser.ParticleStorm);
-        var glowy = {
-            image: 'colorsHD',
-            frame: ['yellow', 'white'],
-            lifespan: { min: 600, max: 900 },
-            vx: { value: { min: 4, max: 12 }, delta: -0.1 },
-            vy: { value: { min: -15.0, max: -10 }, delta: 0.5 },
-            scale: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
-            alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 0.5, y: 1 }, { x: 1, y: 0 }] },
-            emit: {
-                name: 'glowyChild',
-                value: 1,
-                control: [{ x: 0, y: 0 }, { x: 0.2, y: 0 }, { x: 1, y: 1 }]
-            }
-        };
-        var glowyChild = {
-            image: 'colorsHD',
-            frame: ['red', 'green', 'blue'],
-            blendMode: 'HARD_LIGHT',
-            lifespan: 1000,
-            vx: { min: -4, max: 4 },
-            vy: { value: { min: -10, max: -6 }, delta: 0.5 },
-            scale: { value: { min: 0.5, max: 1 }, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
-            alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0 }] }
-        };
-        this.manager.addData('glowy', glowy);
-        this.manager.addData('glowyChild', glowyChild);
-        this.emitter = this.manager.createEmitter();
-        this.emitter.addToWorld();
-        this.emitter.emit('glowy', this.world.centerX - 200, this.world.centerY, { repeat: -1, frequency: 500 });
+        // this.manager = this.game.plugins.add(Phaser.ParticleStorm);
+        // var glowy = {
+        //     image: 'colorsHD',
+        //     frame: ['yellow', 'white'],
+        //     lifespan: { min: 600, max: 900 },
+        //     vx: { value: { min: 4, max: 12 }, delta: -0.1 },
+        //     vy: { value: { min: -15.0, max: -10 }, delta: 0.5 },
+        //     scale: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
+        //     alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 0.5, y: 1 }, { x: 1, y: 0 }] },
+        //     emit: {
+        //         name: 'glowyChild',
+        //         value: 1,
+        //         control: [{ x: 0, y: 0 }, { x: 0.2, y: 0 }, { x: 1, y: 1 }]
+        //     }
+        // };
+        // var glowyChild = {
+        //     image: 'colorsHD',
+        //     frame: ['red', 'green', 'blue'],
+        //     blendMode: 'HARD_LIGHT',
+        //     lifespan: 1000,
+        //     vx: { min: -4, max: 4 },
+        //     vy: { value: { min: -10, max: -6 }, delta: 0.5 },
+        //     scale: { value: { min: 0.5, max: 1 }, control: [{ x: 0, y: 1 }, { x: 1, y: 0.5 }] },
+        //     alpha: { value: 1, control: [{ x: 0, y: 1 }, { x: 1, y: 0 }] }
+        // };
+        // this.manager.addData('glowy', glowy);
+        // this.manager.addData('glowyChild', glowyChild);
+        // this.emitter = this.manager.createEmitter();
+        // this.emitter.addToWorld();
+        // this.emitter.emit('glowy', this.world.centerX - 200, this.world.centerY, { repeat: -1, frequency: 500 });
 
 
 
         
-        this.game.input.onDown.addOnce(this.backToMenu, this);
+        //this.game.input.onDown.addOnce(this.backToMenu, this);
         //this.time.events.add(8000, this.backToMenu, this);
 
     },
