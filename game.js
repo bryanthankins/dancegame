@@ -91,7 +91,7 @@ BasicGame.Game.prototype = {
 
     this.back = this.stage0;
 
-    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 75, 'carrier_command', 'Choose Character to Start', 15);
+    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 75, 'carrier_command', 'Choose Character to Start 1', 15);
     this.chooseCharText.smoothed = false;
     this.chooseCharText.anchor.setTo(0.5);
 
