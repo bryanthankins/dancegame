@@ -689,12 +689,8 @@ BasicGame.Game.prototype = {
                 this.explosionAnimation.visible = true;
                 this.explosionAnimation.reset(arrow.x, arrow.y);
                 this.explosionAnimation.play('kaboom', 30, false, true);
-
   //              this.spotlight.visible = true;
-
-    
             }
-            
         }
         else {
             this.fastClickCount  = 0;                
@@ -722,11 +718,9 @@ BasicGame.Game.prototype = {
             var rotateOffset = 0;
             if (arrow.angle == 0) {
                 slideOffset = 200;
-                //rotateOffset = 15
             }
             else {
                 slideOffset = -200;
-                //rotateOffset = -15
             }
             this.game.add.tween(this.dancer).to({ x: this.game.world.centerX + slideOffset }, 500).to({ x: this.game.world.centerX }, 500).start();
             this.game.add.tween(this.dancer).to({ angle: rotateOffset }, 500).to({ angle: 2 }, 500).to({ angle: 0 }, 500).start();

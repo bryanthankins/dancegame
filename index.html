@@ -5,10 +5,14 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
     <script src="lib/phaser.min.js"></script>
     <script src="lib/particle-storm.min.js"></script>
+    <script src = "lib/fastclick.js"></script>
     <style type="text/css">
         * {
             margin: 0;
             padding: 0;
+        }
+        html {
+            touch-action: manipulation;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
@@ -32,6 +36,7 @@
     <script type="text/javascript">
 
     window.onload = function () {
+        FastClick.attach(document.body);
 
         //	Create your Phaser game and inject it into the gameContainer div.
         //	We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
