@@ -56,6 +56,7 @@ BasicGame.Preloader.prototype = {
         this.game.load.image('portrait2', 'assets/sprites/biopic2.png');
         this.game.load.image('portrait3', 'assets/sprites/biopic3.png');
         this.game.load.image('startBtn', 'assets/sprites/start.png');
+        this.game.load.image('restartBtn', 'assets/sprites/restart.png');
         this.game.load.image('spotlight', 'assets/sprites/spotlight_02.png');
 
         // emitter

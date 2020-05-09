@@ -30,6 +30,7 @@ BasicGame.Game.prototype = {
     create: function () {
 
     // Defaults
+    this.finalCleanup = false;
     this.failCounter = 0;
     this.fastClickCount = 0;
     this.gameRunning = false;
@@ -91,7 +92,7 @@ BasicGame.Game.prototype = {
 
     this.back = this.stage0;
 
-    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 75, 'carrier_command', 'Choose Character to Start 1', 15);
+    this.chooseCharText = this.game.add.bitmapText(this.world.centerX, this.world.centerY - 75, 'carrier_command', 'Choose Character to Start', 15);
     this.chooseCharText.smoothed = false;
     this.chooseCharText.anchor.setTo(0.5);
 
@@ -292,8 +293,17 @@ BasicGame.Game.prototype = {
     this.startBtn.inputEnabled = true;
     this.startBtn.visible = false;
     this.startBtn.events.onInputDown.add(this.startGame, this);
-    //this.add.tween(this.startBtn).to({ y: 275 }, 100).easing(Phaser.Easing.Bounce.Out).start();
     this.add.tween(this.startBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
+
+    // reStart Button
+    this.restartBtn = this.game.add.sprite(this.world.centerX, this.world.centerY, 'restartBtn');
+    this.restartBtn.anchor.setTo(0.5);
+    this.restartBtn.scale.set(2);
+    this.restartBtn.smoothed = false;
+    this.restartBtn.inputEnabled = true;
+    this.restartBtn.visible = false;
+    this.restartBtn.events.onInputDown.add(this.backToMenu, this);
+    this.add.tween(this.restartBtn).to({ angle: -2 }, 500).to({ angle: 2 }, 1000).to({ angle: 0 }, 500).loop().start();
     
     // Spotlight
     this.spotlight = this.game.add.sprite(this.world.centerX, this.world.centerY, 'spotlight');
@@ -380,6 +390,13 @@ BasicGame.Game.prototype = {
                
             // }
             
+        }
+        
+        if(this.finalCleanup) {
+            this.arrows.forEach(function (arrow) {
+                arrow.visible = false;
+            });
+            this.finalCleanup = false;
         }
 
         
@@ -488,6 +505,7 @@ BasicGame.Game.prototype = {
         this.chooseCharText.visible = true;
         this.failText.visible = false;
         this.winText.visible = false;
+        this.restartBtn.visible = false;
         this.scoreText.text = "SCORE: 0";
         this.currScore = 0;
         //Reset to default configs
@@ -502,7 +520,8 @@ BasicGame.Game.prototype = {
     },
     
     endGame: function() {
-        this.gameRunning = false
+        this.gameRunning = false;
+        this.finalCleanup = true;
 
         this.failText.visible = true;
 
@@ -512,9 +531,9 @@ BasicGame.Game.prototype = {
         this.endSound.play();
         this.music.pause();
         this.moveCounter = 0;
+        this.restartBtn.visible = true;
 
-
-        this.game.input.onDown.addOnce(this.backToMenu, this);
+        //this.game.input.onDown.addOnce(this.backToMenu, this);
         //this.time.events.add(3000, this.backToMenu, this);
     
     },
