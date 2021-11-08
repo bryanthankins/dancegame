@@ -435,7 +435,7 @@ BasicGame.Game.prototype = {
         }else if(portrait.key == 'portrait2') {
             this.level = 2;
             difficultyText  = "Level: Med";
-            playerText = "Brianna";
+            playerText = "Brittany";
             this.music = this.song2;
             this.back  = this.stage2;
             this.winScore = 6000;
